@@ -42,11 +42,11 @@
   "workspaces": [
     "example"
   ],
-  "repository": "https://github.com/eumaninho54/react-native-nitro-mask.git",
-  "author": "eumaninho54",
+  "repository": "https://github.com/Salve-Software/react-native-nitro-mask.git",
+  "author": "salvesoftware",
   "license": "MIT",
-  "bugs": "https://github.com/eumaninho54/react-native-nitro-mask/issues",
-  "homepage": "https://github.com/eumaninho54/react-native-nitro-mask#readme",
+  "bugs": "https://github.com/Salve-Software/react-native-nitro-mask/issues",
+  "homepage": "https://github.com/Salve-Software/react-native-nitro-mask#readme",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
