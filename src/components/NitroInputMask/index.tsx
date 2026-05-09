@@ -1,7 +1,7 @@
 import type { NitroInputMaskProps } from './types';
 import React, { useEffect, useId } from 'react';
 import { TextInput } from 'react-native';
-import { nitroModule } from '../../module';
+import { nitroModule } from '../../nitro-module';
 
 export const NitroInputMask = (props: NitroInputMaskProps) => {
   const { mask, value } = props;
