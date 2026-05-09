@@ -33,7 +33,7 @@ internal sealed class Slot {
 // CompiledMask — result of compile(); shared between MaskEngine and callers
 // ---------------------------------------------------------------------------
 
-data class CompiledMask(
+internal data class CompiledMask(
   internal val slots: List<Slot>,
   /** Expanded mask string used by CursorEngine (range positions become '9'). */
   val expandedMask: String
@@ -66,7 +66,7 @@ object MaskEngine {
    * [apply]. This is an acceptable trade-off; prefer distinct bounds when
    * designing date masks (e.g. `[1-12]/[1-31]/9999`).
    */
-  fun compile(mask: String): CompiledMask {
+  internal fun compile(mask: String): CompiledMask {
     val slots = mutableListOf<Slot>()
     val expanded = StringBuilder()
     var i = 0
@@ -115,7 +115,7 @@ object MaskEngine {
   // apply
   // -------------------------------------------------------------------------
 
-  fun apply(input: String, compiled: CompiledMask): Pair<String, String> {
+  internal fun apply(input: String, compiled: CompiledMask): Pair<String, String> {
     if (compiled.slots.isEmpty()) return Pair(input, input)
 
     val masked = StringBuilder()
@@ -192,7 +192,7 @@ object MaskEngine {
   // extractRaw
   // -------------------------------------------------------------------------
 
-  fun extractRaw(text: String, compiled: CompiledMask): String {
+  internal fun extractRaw(text: String, compiled: CompiledMask): String {
     return extractRaw(text, compiled.expandedMask)
   }
 
