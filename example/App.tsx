@@ -14,7 +14,7 @@ function App(): React.JSX.Element {
       <Text style={styles.label}>CPF</Text>
       <NitroMask
         mask="999.999.999-99"
-        value={cpf.masked}
+        value={cpf.raw}
         onChangeText={(maskedValue, rawValue) =>
           setCpf({ masked: maskedValue, raw: rawValue })
         }
@@ -28,7 +28,7 @@ function App(): React.JSX.Element {
       <Text style={styles.label}>Phone</Text>
       <NitroMask
         mask="(99) 99999-9999"
-        value={phone.masked}
+        value={phone.raw}
         onChangeText={(maskedValue, rawValue) =>
           setPhone({ masked: maskedValue, raw: rawValue })
         }
@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
       <Text style={styles.label}>Date</Text>
       <NitroMask
         mask="99/99/9999"
-        value={date.masked}
+        value={date.raw}
         onChangeText={(maskedValue, rawValue) =>
           setDate({ masked: maskedValue, raw: rawValue })
         }
