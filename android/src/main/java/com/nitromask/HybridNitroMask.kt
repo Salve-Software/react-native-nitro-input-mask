@@ -16,15 +16,16 @@ class HybridNitroMask(val context: ThemedReactContext) : HybridNitroMaskSpec() {
     override val view = editText
 
     // Guard flag to prevent infinite TextWatcher loop
-    private var isProgrammatic = false
+    @Volatile private var isProgrammatic = false
 
     // Props
     private var _mask: String = ""
     override var mask: String
         get() = _mask
         set(value) {
+            val raw = extractRaw(editText.text.toString(), _mask)
             _mask = value
-            val (masked, _) = applyMask(editText.text.toString(), _mask)
+            val (masked, _) = applyMask(raw, _mask)
             isProgrammatic = true
             editText.setText(masked)
             isProgrammatic = false
@@ -35,40 +36,98 @@ class HybridNitroMask(val context: ThemedReactContext) : HybridNitroMaskSpec() {
         get() = _value
         set(v) {
             _value = v
-            if (_value == editText.text.toString()) return
+            val currentRaw = extractRaw(editText.text.toString(), _mask)
+            if (_value == currentRaw) return
             val (masked, _) = applyMask(_value, _mask)
             isProgrammatic = true
             editText.setText(masked)
             isProgrammatic = false
         }
 
-    override var onChangeText: (maskedValue: String, rawValue: String) -> Unit = { _, _ -> }
+    override var onChangeText: ((maskedValue: String, rawValue: String) -> Unit)? = null
 
     init {
         editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            private var prevLength = 0
+            private var isDeletion = false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                prevLength = s?.length ?: 0
+                isDeletion = after < count
+            }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 if (isProgrammatic) return
                 val input = s?.toString() ?: ""
                 if (_mask.isEmpty()) {
-                    onChangeText(input, input)
+                    onChangeText?.invoke(input, input)
                     return
                 }
-                val (masked, raw) = applyMask(input, _mask)
-                if (masked == input) {
-                    onChangeText(masked, raw)
+                var (masked, raw) = applyMask(input, _mask)
+
+                // Issue 10: backspace on literal — re-inserted same text, strip one raw char
+                if (isDeletion && masked.length >= prevLength) {
+                    val currentRaw = extractRaw(input, _mask)
+                    if (currentRaw.isNotEmpty()) {
+                        val trimmedRaw = currentRaw.dropLast(1)
+                        val (newMasked, newRaw) = applyMask(trimmedRaw, _mask)
+                        masked = newMasked
+                        raw = newRaw
+                    }
+                }
+
+                if (masked == s?.toString()) {
+                    // Issue 4/5: place cursor after last user-typed char
+                    val cursorPos = lastUserCharPos(masked, _mask)
+                    editText.setSelection(cursorPos)
+                    onChangeText?.invoke(masked, raw)
                 } else {
                     isProgrammatic = true
                     s?.replace(0, s.length, masked)
                     isProgrammatic = false
-                    onChangeText(masked, raw)
+                    // Issue 4/5: place cursor after last user-typed char
+                    val cursorPos = lastUserCharPos(masked, _mask)
+                    editText.setSelection(minOf(cursorPos, editText.text.length))
+                    onChangeText?.invoke(masked, raw)
                 }
             }
         })
     }
 
+    private fun lastUserCharPos(masked: String, mask: String): Int {
+        val maskChars = mask.toList()
+        for (i in masked.length - 1 downTo 0) {
+            if (i < maskChars.size) {
+                val m = maskChars[i]
+                if (m == '9' || m == 'A' || m == '*') return i + 1
+            }
+        }
+        return masked.length
+    }
+
     companion object {
+        fun extractRaw(text: String, mask: String): String {
+            val raw = StringBuilder()
+            val textChars = text.toList()
+            val maskChars = mask.toList()
+            var ti = 0
+            var mi = 0
+            while (ti < textChars.size && mi < maskChars.size) {
+                val m = maskChars[mi]
+                val t = textChars[ti]
+                if (m == '9' || m == 'A' || m == '*') {
+                    raw.append(t)
+                    ti++
+                    mi++
+                } else {
+                    // literal — only consume text char if it matches
+                    if (t == m) ti++
+                    mi++
+                }
+            }
+            return raw.toString()
+        }
+
         fun applyMask(input: String, mask: String): Pair<String, String> {
             if (mask.isEmpty()) return Pair(input, input)
 
