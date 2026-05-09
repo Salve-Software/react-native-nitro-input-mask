@@ -1,11 +1,57 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { NitroMask } from 'react-native-nitro-mask';
 
+type MaskState = { masked: string; raw: string };
+
 function App(): React.JSX.Element {
+  const [cpf, setCpf] = useState<MaskState>({ masked: '', raw: '' });
+  const [phone, setPhone] = useState<MaskState>({ masked: '', raw: '' });
+  const [date, setDate] = useState<MaskState>({ masked: '', raw: '' });
+
   return (
     <View style={styles.container}>
-        <NitroMask isRed={true} style={styles.view} testID="nitro-mask" />
+      <Text style={styles.label}>CPF</Text>
+      <NitroMask
+        mask="999.999.999-99"
+        value={cpf.masked}
+        onChangeText={(maskedValue, rawValue) =>
+          setCpf({ masked: maskedValue, raw: rawValue })
+        }
+        style={styles.input}
+        testID="nitro-mask-cpf"
+      />
+      <Text style={styles.hint}>
+        masked: {cpf.masked} | raw: {cpf.raw}
+      </Text>
+
+      <Text style={styles.label}>Phone</Text>
+      <NitroMask
+        mask="(99) 99999-9999"
+        value={phone.masked}
+        onChangeText={(maskedValue, rawValue) =>
+          setPhone({ masked: maskedValue, raw: rawValue })
+        }
+        style={styles.input}
+        testID="nitro-mask-phone"
+      />
+      <Text style={styles.hint}>
+        masked: {phone.masked} | raw: {phone.raw}
+      </Text>
+
+      <Text style={styles.label}>Date</Text>
+      <NitroMask
+        mask="99/99/9999"
+        value={date.masked}
+        onChangeText={(maskedValue, rawValue) =>
+          setDate({ masked: maskedValue, raw: rawValue })
+        }
+        style={styles.input}
+        testID="nitro-mask-date"
+      />
+      <Text style={styles.hint}>
+        masked: {date.masked} | raw: {date.raw}
+      </Text>
     </View>
   );
 }
@@ -15,10 +61,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 24,
   },
-  view: {
-    width: 200,
-    height: 200
-  }});
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    alignSelf: 'flex-start',
+    marginTop: 16,
+    marginBottom: 4,
+  },
+  input: {
+    width: 280,
+    height: 44,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 6,
+    paddingHorizontal: 12,
+  },
+  hint: {
+    fontSize: 12,
+    color: '#666',
+    alignSelf: 'flex-start',
+    marginTop: 4,
+  },
+});
 
 export default App;
