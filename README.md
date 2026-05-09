@@ -1,10 +1,10 @@
-# react-native-nitro-mask
+# react-native-nitro-input-mask
 
 Native text input masks for React Native — zero JS flicker, built with Nitro Modules.
 
-[![Version](https://img.shields.io/npm/v/react-native-nitro-mask.svg)](https://www.npmjs.com/package/react-native-nitro-mask)
-[![Downloads](https://img.shields.io/npm/dm/react-native-nitro-mask.svg)](https://www.npmjs.com/package/react-native-nitro-mask)
-[![License](https://img.shields.io/npm/l/react-native-nitro-mask.svg)](https://github.com/patrickkabwe/react-native-nitro-mask/LICENSE)
+[![Version](https://img.shields.io/npm/v/react-native-nitro-input-mask.svg)](https://www.npmjs.com/package/react-native-nitro-input-mask)
+[![Downloads](https://img.shields.io/npm/dm/react-native-nitro-input-mask.svg)](https://www.npmjs.com/package/react-native-nitro-input-mask)
+[![License](https://img.shields.io/npm/l/react-native-nitro-input-mask.svg)](https://github.com/patrickkabwe/react-native-nitro-input-mask/LICENSE)
 
 ## Requirements
 
@@ -17,7 +17,7 @@ Native text input masks for React Native — zero JS flicker, built with Nitro M
 ## Installation
 
 ```bash
-npm install react-native-nitro-mask react-native-nitro-modules
+npm install react-native-nitro-input-mask react-native-nitro-modules
 ```
 
 ## Credits

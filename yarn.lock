@@ -9376,9 +9376,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-nitro-mask-example@workspace:example":
+"react-native-nitro-input-mask-example@workspace:example":
   version: 0.0.0-use.local
-  resolution: "react-native-nitro-mask-example@workspace:example"
+  resolution: "react-native-nitro-input-mask-example@workspace:example"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
@@ -9400,9 +9400,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-nitro-mask@workspace:.":
+"react-native-nitro-input-mask@workspace:.":
   version: 0.0.0-use.local
-  resolution: "react-native-nitro-mask@workspace:."
+  resolution: "react-native-nitro-input-mask@workspace:."
   dependencies:
     "@jamesacarr/eslint-formatter-github-actions": "npm:^0.2.0"
     "@semantic-release/changelog": "npm:^6.0.3"

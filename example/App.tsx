@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { NitroMask } from 'react-native-nitro-mask';
+import { NitroInputMask } from 'react-native-nitro-input-mask';
 
 type MaskState = { masked: string; raw: string };
 
@@ -12,42 +12,42 @@ function App(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>CPF</Text>
-      <NitroMask
+      <NitroInputMask
         mask="999.999.999-99"
         value={cpf.raw}
         onChangeText={(maskedValue, rawValue) =>
           setCpf({ masked: maskedValue, raw: rawValue })
         }
         style={styles.input}
-        testID="nitro-mask-cpf"
+        testID="nitro-input-mask-cpf"
       />
       <Text style={styles.hint}>
         masked: {cpf.masked} | raw: {cpf.raw}
       </Text>
 
       <Text style={styles.label}>Phone</Text>
-      <NitroMask
+      <NitroInputMask
         mask="(99) 99999-9999"
         value={phone.raw}
         onChangeText={(maskedValue, rawValue) =>
           setPhone({ masked: maskedValue, raw: rawValue })
         }
         style={styles.input}
-        testID="nitro-mask-phone"
+        testID="nitro-input-mask-phone"
       />
       <Text style={styles.hint}>
         masked: {phone.masked} | raw: {phone.raw}
       </Text>
 
       <Text style={styles.label}>Date</Text>
-      <NitroMask
+      <NitroInputMask
         mask="99/99/9999"
         value={date.raw}
         onChangeText={(maskedValue, rawValue) =>
           setDate({ masked: maskedValue, raw: rawValue })
         }
         style={styles.input}
-        testID="nitro-mask-date"
+        testID="nitro-input-mask-date"
       />
       <Text style={styles.hint}>
         masked: {date.masked} | raw: {date.raw}
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 6,
     paddingHorizontal: 12,
+    color: '#ccc',
   },
   hint: {
     fontSize: 12,

@@ -14,7 +14,7 @@ const { readdir } = require('node:fs/promises')
 const updateViewManagerFiles = async (file) => {
   const viewManagerFile = path.join(
     process.cwd(),
-    'nitrogen/generated/android/kotlin/com/margelo/nitro/nitromask/views',
+    'nitrogen/generated/android/kotlin/com/margelo/nitro/nitroinputmask/views',
     file
   )
 
@@ -22,24 +22,24 @@ const updateViewManagerFiles = async (file) => {
   await writeFile(
     viewManagerFile,
     viewManagerStr.replace(
-      /com\.margelo\.nitro\.nitromask\.\*/g,
-      'com.nitromask.*'
+      /com\.margelo\.nitro\.nitroinputmask\.\*/g,
+      'com.nitroinputmask.*'
     )
   )
-}  
+}
 
 
 const androidWorkaround = async () => {
  const androidOnLoadFile = path.join(
    process.cwd(),
    'nitrogen/generated/android',
-   'NitroMaskOnLoad.cpp'
+   'NitroInputMaskOnLoad.cpp'
  )
- 
+
  const viewManagerDir = await readdir(
   path.join(
     process.cwd(),
-    'nitrogen/generated/android/kotlin/com/margelo/nitro/nitromask/views'
+    'nitrogen/generated/android/kotlin/com/margelo/nitro/nitroinputmask/views'
   )
  )
  const viewManagerFiles = viewManagerDir.filter((file) =>
@@ -53,7 +53,7 @@ const androidWorkaround = async () => {
    throw new Error(`Error updating view manager files: ${res}`)
  }
 
- 
+
  const str = await readFile(androidOnLoadFile, { encoding: 'utf8' })
  await writeFile(androidOnLoadFile, str.replace(/margelo\/nitro\//g, ''))
 }

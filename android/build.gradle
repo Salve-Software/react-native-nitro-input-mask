@@ -20,7 +20,7 @@ def isNewArchitectureEnabled() {
 
 apply plugin: "com.android.library"
 apply plugin: 'org.jetbrains.kotlin.android'
-apply from: '../nitrogen/generated/android/NitroMask+autolinking.gradle'
+apply from: '../nitrogen/generated/android/NitroInputMask+autolinking.gradle'
 apply from: "./fix-prefab.gradle"
 
 if (isNewArchitectureEnabled()) {
@@ -28,15 +28,15 @@ if (isNewArchitectureEnabled()) {
 }
 
 def getExtOrDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroMask_" + name]
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties["NitroInputMask_" + name]
 }
 
 def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroMask_" + name]).toInteger()
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["NitroInputMask_" + name]).toInteger()
 }
 
 android {
-  namespace "com.nitromask"
+  namespace "com.nitroinputmask"
 
   ndkVersion getExtOrDefault("ndkVersion")
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
@@ -142,7 +142,7 @@ dependencies {
 if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
-    libraryName = "NitroMask"
-    codegenJavaPackageName = "com.nitromask"
+    libraryName = "NitroInputMask"
+    codegenJavaPackageName = "com.nitroinputmask"
   }
 }

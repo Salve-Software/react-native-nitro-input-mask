@@ -1,5 +1,5 @@
 {
-  "name": "react-native-nitro-mask",
+  "name": "react-native-nitro-input-mask",
   "version": "0.1.0",
   "description": "Native text input masks for React Native — zero JS flicker, built with Nitro Modules.",
   "main": "./lib/commonjs/index.js",
@@ -13,11 +13,11 @@
     "release": "semantic-release",
     "build": "yarn typecheck && bob build",
     "codegen": "nitrogen --logLevel=\"debug\" && yarn build && node post-script.js",
-    "example": "yarn workspace react-native-nitro-mask-example"
+    "example": "yarn workspace react-native-nitro-input-mask-example"
   },
   "keywords": [
     "react-native",
-    "react-native-nitro-mask"
+    "react-native-nitro-input-mask"
   ],
   "files": [
     "src",
@@ -44,11 +44,11 @@
   "workspaces": [
     "example"
   ],
-  "repository": "https://github.com/Salve-Software/react-native-nitro-mask.git",
+  "repository": "https://github.com/Salve-Software/react-native-nitro-input-mask.git",
   "author": "salvesoftware",
   "license": "MIT",
-  "bugs": "https://github.com/Salve-Software/react-native-nitro-mask/issues",
-  "homepage": "https://github.com/Salve-Software/react-native-nitro-mask#readme",
+  "bugs": "https://github.com/Salve-Software/react-native-nitro-input-mask/issues",
+  "homepage": "https://github.com/Salve-Software/react-native-nitro-input-mask#readme",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

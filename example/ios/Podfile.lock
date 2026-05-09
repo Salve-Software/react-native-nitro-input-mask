@@ -3,7 +3,7 @@ PODS:
   - hermes-engine (250829098.0.9):
     - hermes-engine/Pre-built (= 250829098.0.9)
   - hermes-engine/Pre-built (250829098.0.9)
-  - NitroMask (0.1.0):
+  - NitroInputMask (0.1.0):
     - hermes-engine
     - NitroModules
     - RCTRequired
@@ -1906,7 +1906,7 @@ PODS:
 DEPENDENCIES:
   - FBLazyVector (from `../../node_modules/react-native/Libraries/FBLazyVector`)
   - hermes-engine (from `../../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - NitroMask (from `../..`)
+  - NitroInputMask (from `../..`)
   - NitroModules (from `../../node_modules/react-native-nitro-modules`)
   - RCTDeprecation (from `../../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
   - RCTRequired (from `../../node_modules/react-native/Libraries/Required`)
@@ -1988,7 +1988,7 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-v250829098.0.9
-  NitroMask:
+  NitroInputMask:
     :path: "../.."
   NitroModules:
     :path: "../../node_modules/react-native-nitro-modules"
@@ -2140,7 +2140,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FBLazyVector: e97c19a5a442429d1988f182a1940fb08df514da
   hermes-engine: d08ba23987afda3fd562720c5a810919746c2e77
-  NitroMask: 4d81c96557428bb7464ca4c586df2b8e3cccacdc
+  NitroInputMask: 24ef4dc574259eeae9f9f19b3c1012583df84aba
   NitroModules: 1985a9de2cf4a6de1265c5936b7cc9d7f30e45d8
   RCTDeprecation: af44b104091a34482596cd9bd7e8d90c4e9b4bd7
   RCTRequired: bb77b070f75f53398ce43c0aaaa58337cebe2bf6
@@ -2215,6 +2215,6 @@ SPEC CHECKSUMS:
   ReactNativeDependencies: f619fec548777c8badcb89274e718f13b747450c
   Yoga: 7c1c3b93e408ac46c7ed64b5641ca7161747378d
 
-PODFILE CHECKSUM: 4d32cd7072faffc462e019a94bb3822ffc40f284
+PODFILE CHECKSUM: 5298a8edc889446c9a38dfc57081362c15806cce
 
 COCOAPODS: 1.15.2
