@@ -26,13 +26,14 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
 
   var value: String = "" {
     didSet {
-      guard value != textField.text else { return }
+      let currentRaw = extractRaw(from: textField.text ?? "", mask: mask)
+      guard value != currentRaw else { return }
       let (masked, _) = HybridNitroMask.applyMask(input: value, mask: mask)
       textField.text = masked
     }
   }
 
-  var onChangeText: (_ maskedValue: String, _ rawValue: String) -> Void = { _, _ in }
+  var onChangeText: ((_ maskedValue: String, _ rawValue: String) -> Void)? = nil
 
   override init() {
     super.init()
@@ -53,18 +54,42 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
 
     if mask.isEmpty {
       textField.text = proposed
-      onChangeText(proposed, proposed)
+      onChangeText?(proposed, proposed)
       return false
     }
 
-    let (masked, raw) = HybridNitroMask.applyMask(input: proposed, mask: mask)
+    let isDeletion = string.isEmpty
+    var (masked, raw) = HybridNitroMask.applyMask(input: proposed, mask: mask)
+
+    // Issue 10: if deleting landed back on the same text, a literal was deleted — strip one more raw char
+    if isDeletion && masked == current {
+      let currentRaw = extractRaw(from: current, mask: mask)
+      if !currentRaw.isEmpty {
+        let trimmedRaw = String(currentRaw.dropLast())
+        (masked, _) = HybridNitroMask.applyMask(input: trimmedRaw, mask: mask)
+      }
+    }
+
     textField.text = masked
 
-    // Move caret to end
-    let end = textField.endOfDocument
-    textField.selectedTextRange = textField.textRange(from: end, to: end)
+    // Issue 4/5: place cursor after last user-typed character, not always at end
+    let maskChars = Array(mask)
+    var cursorOffset = masked.count
+    let maskedChars = Array(masked)
+    for i in stride(from: maskedChars.count - 1, through: 0, by: -1) {
+      if i < maskChars.count {
+        let m = maskChars[i]
+        if m == "9" || m == "A" || m == "*" {
+          cursorOffset = i + 1
+          break
+        }
+      }
+    }
+    if let targetPos = textField.position(from: textField.beginningOfDocument, offset: cursorOffset) {
+      textField.selectedTextRange = textField.textRange(from: targetPos, to: targetPos)
+    }
 
-    onChangeText(masked, raw)
+    onChangeText?(masked, raw)
     return false
   }
 
@@ -84,8 +109,10 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
         ti += 1
         mi += 1
       } else {
-        // literal — skip it in text
-        ti += 1
+        // literal — only consume text char if it matches the literal
+        if ti < textChars.count && textChars[ti] == maskChars[mi] {
+          ti += 1
+        }
         mi += 1
       }
     }
