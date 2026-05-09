@@ -26,14 +26,34 @@ namespace margelo::nitro::nitromask::views {
                                              const HybridNitroMaskProps& sourceProps,
                                              const react::RawProps& rawProps):
     react::ViewProps(context, sourceProps, rawProps, filterObjectKeys),
-    isRed([&]() -> CachedProp<bool> {
+    mask([&]() -> CachedProp<std::string> {
       try {
-        const react::RawValue* rawValue = rawProps.at("isRed", nullptr, nullptr);
-        if (rawValue == nullptr) return sourceProps.isRed;
+        const react::RawValue* rawValue = rawProps.at("mask", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.mask;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<bool>::fromRawValue(*runtime, value, sourceProps.isRed);
+        return CachedProp<std::string>::fromRawValue(*runtime, value, sourceProps.mask);
       } catch (const std::exception& exc) {
-        throw std::runtime_error(std::string("NitroMask.isRed: ") + exc.what());
+        throw std::runtime_error(std::string("NitroMask.mask: ") + exc.what());
+      }
+    }()),
+    value([&]() -> CachedProp<std::string> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("value", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.value;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::string>::fromRawValue(*runtime, value, sourceProps.value);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroMask.value: ") + exc.what());
+      }
+    }()),
+    onChangeText([&]() -> CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> {
+      try {
+        const react::RawValue* rawValue = rawProps.at("onChangeText", nullptr, nullptr);
+        if (rawValue == nullptr) return sourceProps.onChangeText;
+        const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
+        return CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, PropNameIDCache::get(*runtime, "f")), sourceProps.onChangeText);
+      } catch (const std::exception& exc) {
+        throw std::runtime_error(std::string("NitroMask.onChangeText: ") + exc.what());
       }
     }()),
     hybridRef([&]() -> CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroMaskSpec>& /* ref */)>>> {
@@ -49,7 +69,9 @@ namespace margelo::nitro::nitromask::views {
 
   bool HybridNitroMaskProps::filterObjectKeys(const std::string& propName) {
     switch (hashString(propName)) {
-      case hashString("isRed"): return true;
+      case hashString("mask"): return true;
+      case hashString("value"): return true;
+      case hashString("onChangeText"): return true;
       case hashString("hybridRef"): return true;
       default: return false;
     }

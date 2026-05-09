@@ -5,7 +5,9 @@ import type {
 } from 'react-native-nitro-modules'
 
 export interface NitroMaskProps extends HybridViewProps {
-   isRed: boolean
+   mask: string
+   value: string
+   onChangeText: (maskedValue: string, rawValue: string) => void
 }
 
 export interface NitroMaskMethods extends HybridViewMethods {}

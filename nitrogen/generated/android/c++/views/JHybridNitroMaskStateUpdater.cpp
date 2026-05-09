@@ -37,9 +37,17 @@ void JHybridNitroMaskStateUpdater::updateViewProps(jni::alias_ref<jni::JClass> /
   }
 
   // Update all props if they are dirty
-  if (props->isRed.isDirty) {
-    hybridView->setIsRed(props->isRed.value);
-    props->isRed.isDirty = false;
+  if (props->mask.isDirty) {
+    hybridView->setMask(props->mask.value);
+    props->mask.isDirty = false;
+  }
+  if (props->value.isDirty) {
+    hybridView->setValue(props->value.value);
+    props->value.isDirty = false;
+  }
+  if (props->onChangeText.isDirty) {
+    hybridView->setOnChangeText(props->onChangeText.value);
+    props->onChangeText.isDirty = false;
   }
 
   // Update hybridRef if it changed

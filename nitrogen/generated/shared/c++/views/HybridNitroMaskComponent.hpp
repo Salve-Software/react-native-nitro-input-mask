@@ -16,9 +16,10 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/components/view/ViewProps.h>
 
+#include <string>
+#include <functional>
 #include <memory>
 #include "HybridNitroMaskSpec.hpp"
-#include <functional>
 #include <optional>
 
 namespace margelo::nitro::nitromask::views {
@@ -41,7 +42,9 @@ namespace margelo::nitro::nitromask::views {
                          const react::RawProps& rawProps);
 
   public:
-    CachedProp<bool> isRed;
+    CachedProp<std::string> mask;
+    CachedProp<std::string> value;
+    CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> onChangeText;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroMaskSpec>& /* ref */)>>> hybridRef;
 
   private:

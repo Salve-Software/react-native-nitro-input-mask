@@ -10,7 +10,9 @@ import NitroModules
 /// See ``HybridNitroMaskSpec``
 public protocol HybridNitroMaskSpec_protocol: HybridObject, HybridView {
   // Properties
-  var isRed: Bool { get set }
+  var mask: String { get set }
+  var value: String { get set }
+  var onChangeText: (_ maskedValue: String, _ rawValue: String) -> Void { get set }
 
   // Methods
   

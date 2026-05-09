@@ -121,14 +121,44 @@ open class HybridNitroMaskSpec_cxx {
   }
 
   // Properties
-  public final var isRed: Bool {
+  public final var mask: std.string {
     @inline(__always)
     get {
-      return self.__implementation.isRed
+      return std.string(self.__implementation.mask)
     }
     @inline(__always)
     set {
-      self.__implementation.isRed = newValue
+      self.__implementation.mask = String(newValue)
+    }
+  }
+  
+  public final var value: std.string {
+    @inline(__always)
+    get {
+      return std.string(self.__implementation.value)
+    }
+    @inline(__always)
+    set {
+      self.__implementation.value = String(newValue)
+    }
+  }
+  
+  public final var onChangeText: bridge.Func_void_std__string_std__string {
+    @inline(__always)
+    get {
+      return { () -> bridge.Func_void_std__string_std__string in
+        let __closureWrapper = Func_void_std__string_std__string(self.__implementation.onChangeText)
+        return bridge.create_Func_void_std__string_std__string(__closureWrapper.toUnsafe())
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__implementation.onChangeText = { () -> (String, String) -> Void in
+        let __wrappedFunction = bridge.wrap_Func_void_std__string_std__string(newValue)
+        return { (__maskedValue: String, __rawValue: String) -> Void in
+          __wrappedFunction.call(std.string(__maskedValue), std.string(__rawValue))
+        }
+      }()
     }
   }
 

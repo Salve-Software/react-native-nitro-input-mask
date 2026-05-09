@@ -50,8 +50,12 @@ namespace margelo::nitro::nitromask {
 
   public:
     // Properties
-    bool getIsRed() override;
-    void setIsRed(bool isRed) override;
+    std::string getMask() override;
+    void setMask(const std::string& mask) override;
+    std::string getValue() override;
+    void setValue(const std::string& value) override;
+    std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> getOnChangeText() override;
+    void setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) override;
 
   public:
     // Methods

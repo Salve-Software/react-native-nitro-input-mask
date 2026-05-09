@@ -17,7 +17,9 @@ namespace NitroMask { class HybridNitroMaskSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridNitroMaskSpec.hpp"
+#include <functional>
 #include <memory>
+#include <string>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -25,6 +27,28 @@ namespace NitroMask { class HybridNitroMaskSpec_cxx; }
  */
 namespace margelo::nitro::nitromask::bridge::swift {
 
+  // pragma MARK: std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>
+  /**
+   * Specialized version of `std::function<void(const std::string&, const std::string&)>`.
+   */
+  using Func_void_std__string_std__string = std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::string& / * maskedValue * /, const std::string& / * rawValue * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__string_std__string_Wrapper final {
+  public:
+    explicit Func_void_std__string_std__string_Wrapper(std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>(std::move(func))) {}
+    inline void call(std::string maskedValue, std::string rawValue) const noexcept {
+      _function->operator()(maskedValue, rawValue);
+    }
+  private:
+    std::unique_ptr<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_std__string_std__string create_Func_void_std__string_std__string(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_std__string_std__string_Wrapper wrap_Func_void_std__string_std__string(Func_void_std__string_std__string value) noexcept {
+    return Func_void_std__string_std__string_Wrapper(std::move(value));
+  }
+  
   // pragma MARK: std::shared_ptr<HybridNitroMaskSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridNitroMaskSpec>`.

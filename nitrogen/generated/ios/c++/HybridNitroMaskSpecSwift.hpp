@@ -14,7 +14,8 @@ namespace NitroMask { class HybridNitroMaskSpec_cxx; }
 
 
 
-
+#include <string>
+#include <functional>
 
 #include "NitroMask-Swift-Cxx-Umbrella.hpp"
 
@@ -62,11 +63,26 @@ namespace margelo::nitro::nitromask {
 
   public:
     // Properties
-    inline bool getIsRed() noexcept override {
-      return _swiftPart.isRed();
+    inline std::string getMask() noexcept override {
+      auto __result = _swiftPart.getMask();
+      return __result;
     }
-    inline void setIsRed(bool isRed) noexcept override {
-      _swiftPart.setIsRed(std::forward<decltype(isRed)>(isRed));
+    inline void setMask(const std::string& mask) noexcept override {
+      _swiftPart.setMask(mask);
+    }
+    inline std::string getValue() noexcept override {
+      auto __result = _swiftPart.getValue();
+      return __result;
+    }
+    inline void setValue(const std::string& value) noexcept override {
+      _swiftPart.setValue(value);
+    }
+    inline std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> getOnChangeText() noexcept override {
+      auto __result = _swiftPart.getOnChangeText();
+      return __result;
+    }
+    inline void setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) noexcept override {
+      _swiftPart.setOnChangeText(onChangeText);
     }
 
   public:

@@ -16,6 +16,7 @@
 #include <NitroModules/HybridObjectRegistry.hpp>
 
 #include "JHybridNitroMaskSpec.hpp"
+#include "JFunc_void_std__string_std__string.hpp"
 #include "views/JHybridNitroMaskStateUpdater.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
 
@@ -42,6 +43,7 @@ void registerAllNatives() {
 
   // Register native JNI methods
   margelo::nitro::nitromask::JHybridNitroMaskSpec::CxxPart::registerNatives();
+  margelo::nitro::nitromask::JFunc_void_std__string_std__string_cxx::registerNatives();
   margelo::nitro::nitromask::views::JHybridNitroMaskStateUpdater::registerNatives();
 
   // Register Nitro Hybrid Objects

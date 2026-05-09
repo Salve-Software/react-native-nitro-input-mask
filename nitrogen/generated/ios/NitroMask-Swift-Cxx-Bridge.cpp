@@ -14,6 +14,14 @@
 
 namespace margelo::nitro::nitromask::bridge::swift {
 
+  // pragma MARK: std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>
+  Func_void_std__string_std__string create_Func_void_std__string_std__string(void* NON_NULL swiftClosureWrapper) noexcept {
+    auto swiftClosure = NitroMask::Func_void_std__string_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& maskedValue, const std::string& rawValue) mutable -> void {
+      swiftClosure.call(maskedValue, rawValue);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<HybridNitroMaskSpec>
   std::shared_ptr<HybridNitroMaskSpec> create_std__shared_ptr_HybridNitroMaskSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     NitroMask::HybridNitroMaskSpec_cxx swiftPart = NitroMask::HybridNitroMaskSpec_cxx::fromUnsafe(swiftUnsafePointer);

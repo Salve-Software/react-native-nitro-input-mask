@@ -9,7 +9,10 @@
 
 
 
-
+#include <string>
+#include <functional>
+#include "JFunc_void_std__string_std__string.hpp"
+#include <NitroModules/JNICallable.hpp>
 
 namespace margelo::nitro::nitromask {
 
@@ -41,14 +44,40 @@ namespace margelo::nitro::nitromask {
   }
 
   // Properties
-  bool JHybridNitroMaskSpec::getIsRed() {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<jboolean()>("isRed");
+  std::string JHybridNitroMaskSpec::getMask() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getMask");
     auto __result = method(_javaPart);
-    return static_cast<bool>(__result);
+    return __result->toStdString();
   }
-  void JHybridNitroMaskSpec::setIsRed(bool isRed) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jboolean /* isRed */)>("setRed");
-    method(_javaPart, isRed);
+  void JHybridNitroMaskSpec::setMask(const std::string& mask) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* mask */)>("setMask");
+    method(_javaPart, jni::make_jstring(mask));
+  }
+  std::string JHybridNitroMaskSpec::getValue() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>()>("getValue");
+    auto __result = method(_javaPart);
+    return __result->toStdString();
+  }
+  void JHybridNitroMaskSpec::setValue(const std::string& value) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* value */)>("setValue");
+    method(_javaPart, jni::make_jstring(value));
+  }
+  std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> JHybridNitroMaskSpec::getOnChangeText() {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string_std__string::javaobject>()>("getOnChangeText_cxx");
+    auto __result = method(_javaPart);
+    return [&]() -> std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> {
+      if (__result->isInstanceOf(JFunc_void_std__string_std__string_cxx::javaClassStatic())) [[likely]] {
+        auto downcast = jni::static_ref_cast<JFunc_void_std__string_std__string_cxx::javaobject>(__result);
+        return downcast->cthis()->getFunction();
+      } else {
+        auto __resultRef = jni::make_global(__result);
+        return JNICallable<JFunc_void_std__string_std__string, void(std::string, std::string)>(std::move(__resultRef));
+      }
+    }();
+  }
+  void JHybridNitroMaskSpec::setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string_std__string::javaobject> /* onChangeText */)>("setOnChangeText_cxx");
+    method(_javaPart, JFunc_void_std__string_std__string_cxx::fromCpp(onChangeText));
   }
 
   // Methods

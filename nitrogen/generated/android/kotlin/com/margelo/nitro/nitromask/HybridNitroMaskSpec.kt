@@ -30,7 +30,27 @@ abstract class HybridNitroMaskSpec: HybridView() {
   @get:Keep
   @set:DoNotStrip
   @set:Keep
-  abstract var isRed: Boolean
+  abstract var mask: String
+  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var value: String
+  
+  abstract var onChangeText: (maskedValue: String, rawValue: String) -> Unit
+  
+  private var onChangeText_cxx: Func_void_std__string_std__string
+    @Keep
+    @DoNotStrip
+    get() {
+      return Func_void_std__string_std__string_java(onChangeText)
+    }
+    @Keep
+    @DoNotStrip
+    set(value) {
+      onChangeText = value
+    }
 
   // Methods
   

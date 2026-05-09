@@ -13,7 +13,9 @@ namespace margelo::nitro::nitromask { class HybridNitroMaskSpec; }
 
 // Include C++ defined types
 #include "HybridNitroMaskSpec.hpp"
+#include <functional>
 #include <memory>
+#include <string>
 
 // C++ helpers for Swift
 #include "NitroMask-Swift-Cxx-Bridge.hpp"

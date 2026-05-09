@@ -14,8 +14,12 @@ namespace margelo::nitro::nitromask {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridGetter("isRed", &HybridNitroMaskSpec::getIsRed);
-      prototype.registerHybridSetter("isRed", &HybridNitroMaskSpec::setIsRed);
+      prototype.registerHybridGetter("mask", &HybridNitroMaskSpec::getMask);
+      prototype.registerHybridSetter("mask", &HybridNitroMaskSpec::setMask);
+      prototype.registerHybridGetter("value", &HybridNitroMaskSpec::getValue);
+      prototype.registerHybridSetter("value", &HybridNitroMaskSpec::setValue);
+      prototype.registerHybridGetter("onChangeText", &HybridNitroMaskSpec::getOnChangeText);
+      prototype.registerHybridSetter("onChangeText", &HybridNitroMaskSpec::setOnChangeText);
     });
   }
 

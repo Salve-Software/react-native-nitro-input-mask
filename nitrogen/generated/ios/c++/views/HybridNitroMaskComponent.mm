@@ -79,10 +79,20 @@ using namespace margelo::nitro::nitromask::views;
   // 2. Update each prop individually
   swiftPart.beforeUpdate();
 
-  // isRed: boolean
-  if (newViewProps.isRed.isDirty) {
-    swiftPart.setIsRed(newViewProps.isRed.value);
-    newViewProps.isRed.isDirty = false;
+  // mask: string
+  if (newViewProps.mask.isDirty) {
+    swiftPart.setMask(newViewProps.mask.value);
+    newViewProps.mask.isDirty = false;
+  }
+  // value: string
+  if (newViewProps.value.isDirty) {
+    swiftPart.setValue(newViewProps.value.value);
+    newViewProps.value.isDirty = false;
+  }
+  // onChangeText: function
+  if (newViewProps.onChangeText.isDirty) {
+    swiftPart.setOnChangeText(newViewProps.onChangeText.value);
+    newViewProps.onChangeText.isDirty = false;
   }
 
   swiftPart.afterUpdate();

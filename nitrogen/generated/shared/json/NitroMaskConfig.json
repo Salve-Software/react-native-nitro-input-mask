@@ -4,7 +4,9 @@
   "bubblingEventTypes": {},
   "directEventTypes": {},
   "validAttributes": {
-    "isRed": true,
+    "mask": true,
+    "value": true,
+    "onChangeText": true,
     "hybridRef": true
   }
 }
