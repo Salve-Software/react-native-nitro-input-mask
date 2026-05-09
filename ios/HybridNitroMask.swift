@@ -9,13 +9,25 @@ import Foundation
 import UIKit
 import NitroModules
 
-class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
-  // UITextField as the view
+// Separate NSObject delegate required because HybridNitroMaskSpec_base does not inherit NSObject
+private class TextFieldDelegate: NSObject, UITextFieldDelegate {
+  weak var owner: HybridNitroMask?
+
+  func textField(
+    _ textField: UITextField,
+    shouldChangeCharactersIn range: NSRange,
+    replacementString string: String
+  ) -> Bool {
+    owner?.handleTextChange(textField, range: range, replacement: string) ?? true
+  }
+}
+
+class HybridNitroMask: HybridNitroMaskSpec {
   private let textField = UITextField()
+  private let tfDelegate = TextFieldDelegate()
 
   var view: UIView { textField }
 
-  // Props
   var mask: String = "" {
     didSet {
       let raw = extractRaw(from: textField.text ?? "", mask: oldValue)
@@ -37,16 +49,15 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
 
   override init() {
     super.init()
-    textField.delegate = self
+    tfDelegate.owner = self
+    textField.delegate = tfDelegate
     textField.borderStyle = .none
   }
 
-  // MARK: - UITextFieldDelegate
-
-  func textField(
+  func handleTextChange(
     _ textField: UITextField,
-    shouldChangeCharactersIn range: NSRange,
-    replacementString string: String
+    range: NSRange,
+    replacement string: String
   ) -> Bool {
     let current = textField.text ?? ""
     guard let swiftRange = Range(range, in: current) else { return false }
@@ -61,21 +72,19 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
     let isDeletion = string.isEmpty
     var (masked, raw) = HybridNitroMask.applyMask(input: proposed, mask: mask)
 
-    // Issue 10: if deleting landed back on the same text, a literal was deleted — strip one more raw char
     if isDeletion && masked == current {
       let currentRaw = extractRaw(from: current, mask: mask)
       if !currentRaw.isEmpty {
         let trimmedRaw = String(currentRaw.dropLast())
-        (masked, _) = HybridNitroMask.applyMask(input: trimmedRaw, mask: mask)
+        (masked, raw) = HybridNitroMask.applyMask(input: trimmedRaw, mask: mask)
       }
     }
 
     textField.text = masked
 
-    // Issue 4/5: place cursor after last user-typed character, not always at end
     let maskChars = Array(mask)
-    var cursorOffset = masked.count
     let maskedChars = Array(masked)
+    var cursorOffset = masked.count
     for i in stride(from: maskedChars.count - 1, through: 0, by: -1) {
       if i < maskChars.count {
         let m = maskChars[i]
@@ -93,8 +102,6 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
     return false
   }
 
-  // MARK: - Mask algorithm
-
   private func extractRaw(from text: String, mask: String) -> String {
     var raw = ""
     let textChars = Array(text)
@@ -103,14 +110,12 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
     var mi = 0
     while ti < textChars.count && mi < maskChars.count {
       let m = maskChars[mi]
-      let t = textChars[ti]
       if m == "9" || m == "A" || m == "*" {
-        raw.append(t)
+        raw.append(textChars[ti])
         ti += 1
         mi += 1
       } else {
-        // literal — only consume text char if it matches the literal
-        if ti < textChars.count && textChars[ti] == maskChars[mi] {
+        if textChars[ti] == maskChars[mi] {
           ti += 1
         }
         mi += 1
@@ -134,45 +139,28 @@ class HybridNitroMask: HybridNitroMaskSpec, UITextFieldDelegate {
       switch m {
       case "9":
         if c.isNumber {
-          masked.append(c)
-          raw.append(c)
-          ii += 1
+          masked.append(c); raw.append(c); ii += 1
         } else {
-          ii += 1 // skip non-digit
-          continue
+          ii += 1; continue
         }
       case "A":
         if c.isLetter {
-          masked.append(c)
-          raw.append(c)
-          ii += 1
+          masked.append(c); raw.append(c); ii += 1
         } else {
-          ii += 1
-          continue
+          ii += 1; continue
         }
       case "*":
         if c.isLetter || c.isNumber {
-          masked.append(c)
-          raw.append(c)
-          ii += 1
+          masked.append(c); raw.append(c); ii += 1
         } else {
-          ii += 1
-          continue
+          ii += 1; continue
         }
       default:
-        // Literal character — auto-insert
         masked.append(m)
-        // If current input char equals the literal, consume it to avoid duplication on paste
-        if c == m {
-          ii += 1
-        }
+        if c == m { ii += 1 }
       }
       mi += 1
     }
-
-    // Append any remaining literals from mask (if input still has chars)
-    // Only do this if we haven't exhausted input
-    // (No trailing literals — stop at end of input)
 
     return (masked, raw)
   }
