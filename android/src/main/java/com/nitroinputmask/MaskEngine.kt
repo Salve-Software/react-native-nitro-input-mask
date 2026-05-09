@@ -4,7 +4,7 @@ package com.nitroinputmask
 // Slot — private internal representation of each compiled mask position
 // ---------------------------------------------------------------------------
 
-private sealed class Slot {
+internal sealed class Slot {
   object Digit : Slot()
   object Letter : Slot()
   object Any : Slot()
