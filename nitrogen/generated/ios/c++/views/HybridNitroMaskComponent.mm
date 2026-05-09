@@ -89,7 +89,7 @@ using namespace margelo::nitro::nitromask::views;
     swiftPart.setValue(newViewProps.value.value);
     newViewProps.value.isDirty = false;
   }
-  // onChangeText: function
+  // onChangeText: optional
   if (newViewProps.onChangeText.isDirty) {
     swiftPart.setOnChangeText(newViewProps.onChangeText.value);
     newViewProps.onChangeText.isDirty = false;

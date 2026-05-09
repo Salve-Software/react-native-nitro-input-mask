@@ -46,12 +46,12 @@ namespace margelo::nitro::nitromask::views {
         throw std::runtime_error(std::string("NitroMask.value: ") + exc.what());
       }
     }()),
-    onChangeText([&]() -> CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> {
+    onChangeText([&]() -> CachedProp<std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>> {
       try {
         const react::RawValue* rawValue = rawProps.at("onChangeText", nullptr, nullptr);
         if (rawValue == nullptr) return sourceProps.onChangeText;
         const auto& [runtime, value] = (std::pair<jsi::Runtime*, jsi::Value>)*rawValue;
-        return CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, PropNameIDCache::get(*runtime, "f")), sourceProps.onChangeText);
+        return CachedProp<std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>>::fromRawValue(*runtime, value.asObject(*runtime).getProperty(*runtime, PropNameIDCache::get(*runtime, "f")), sourceProps.onChangeText);
       } catch (const std::exception& exc) {
         throw std::runtime_error(std::string("NitroMask.onChangeText: ") + exc.what());
       }

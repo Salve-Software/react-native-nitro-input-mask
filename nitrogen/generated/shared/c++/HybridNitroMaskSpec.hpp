@@ -17,6 +17,7 @@
 
 #include <string>
 #include <functional>
+#include <optional>
 
 namespace margelo::nitro::nitromask {
 
@@ -49,8 +50,8 @@ namespace margelo::nitro::nitromask {
       virtual void setMask(const std::string& mask) = 0;
       virtual std::string getValue() = 0;
       virtual void setValue(const std::string& value) = 0;
-      virtual std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> getOnChangeText() = 0;
-      virtual void setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) = 0;
+      virtual std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> getOnChangeText() = 0;
+      virtual void setOnChangeText(const std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>& onChangeText) = 0;
 
     public:
       // Methods

@@ -12,7 +12,7 @@ public protocol HybridNitroMaskSpec_protocol: HybridObject, HybridView {
   // Properties
   var mask: String { get set }
   var value: String { get set }
-  var onChangeText: (_ maskedValue: String, _ rawValue: String) -> Void { get set }
+  var onChangeText: ((_ maskedValue: String, _ rawValue: String) -> Void)? { get set }
 
   // Methods
   

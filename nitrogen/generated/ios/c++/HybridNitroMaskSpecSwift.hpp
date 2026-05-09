@@ -16,6 +16,7 @@ namespace NitroMask { class HybridNitroMaskSpec_cxx; }
 
 #include <string>
 #include <functional>
+#include <optional>
 
 #include "NitroMask-Swift-Cxx-Umbrella.hpp"
 
@@ -77,11 +78,11 @@ namespace margelo::nitro::nitromask {
     inline void setValue(const std::string& value) noexcept override {
       _swiftPart.setValue(value);
     }
-    inline std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> getOnChangeText() noexcept override {
+    inline std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> getOnChangeText() noexcept override {
       auto __result = _swiftPart.getOnChangeText();
       return __result;
     }
-    inline void setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) noexcept override {
+    inline void setOnChangeText(const std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>& onChangeText) noexcept override {
       _swiftPart.setOnChangeText(onChangeText);
     }
 

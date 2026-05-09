@@ -18,9 +18,9 @@
 
 #include <string>
 #include <functional>
+#include <optional>
 #include <memory>
 #include "HybridNitroMaskSpec.hpp"
-#include <optional>
 
 namespace margelo::nitro::nitromask::views {
 
@@ -44,7 +44,7 @@ namespace margelo::nitro::nitromask::views {
   public:
     CachedProp<std::string> mask;
     CachedProp<std::string> value;
-    CachedProp<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> onChangeText;
+    CachedProp<std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>> onChangeText;
     CachedProp<std::optional<std::function<void(const std::shared_ptr<HybridNitroMaskSpec>& /* ref */)>>> hybridRef;
 
   private:

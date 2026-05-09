@@ -11,6 +11,7 @@
 
 #include <string>
 #include <functional>
+#include <optional>
 #include "JFunc_void_std__string_std__string.hpp"
 #include <NitroModules/JNICallable.hpp>
 
@@ -62,10 +63,10 @@ namespace margelo::nitro::nitromask {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* value */)>("setValue");
     method(_javaPart, jni::make_jstring(value));
   }
-  std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> JHybridNitroMaskSpec::getOnChangeText() {
+  std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> JHybridNitroMaskSpec::getOnChangeText() {
     static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<JFunc_void_std__string_std__string::javaobject>()>("getOnChangeText_cxx");
     auto __result = method(_javaPart);
-    return [&]() -> std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> {
+    return __result != nullptr ? std::make_optional([&]() -> std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> {
       if (__result->isInstanceOf(JFunc_void_std__string_std__string_cxx::javaClassStatic())) [[likely]] {
         auto downcast = jni::static_ref_cast<JFunc_void_std__string_std__string_cxx::javaobject>(__result);
         return downcast->cthis()->getFunction();
@@ -73,11 +74,11 @@ namespace margelo::nitro::nitromask {
         auto __resultRef = jni::make_global(__result);
         return JNICallable<JFunc_void_std__string_std__string, void(std::string, std::string)>(std::move(__resultRef));
       }
-    }();
+    }()) : std::nullopt;
   }
-  void JHybridNitroMaskSpec::setOnChangeText(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& onChangeText) {
+  void JHybridNitroMaskSpec::setOnChangeText(const std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>& onChangeText) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<JFunc_void_std__string_std__string::javaobject> /* onChangeText */)>("setOnChangeText_cxx");
-    method(_javaPart, JFunc_void_std__string_std__string_cxx::fromCpp(onChangeText));
+    method(_javaPart, onChangeText.has_value() ? JFunc_void_std__string_std__string_cxx::fromCpp(onChangeText.value()) : nullptr);
   }
 
   // Methods

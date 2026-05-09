@@ -19,6 +19,7 @@ namespace NitroMask { class HybridNitroMaskSpec_cxx; }
 #include "HybridNitroMaskSpec.hpp"
 #include <functional>
 #include <memory>
+#include <optional>
 #include <string>
 
 /**
@@ -47,6 +48,21 @@ namespace margelo::nitro::nitromask::bridge::swift {
   Func_void_std__string_std__string create_Func_void_std__string_std__string(void* NON_NULL swiftClosureWrapper) noexcept;
   inline Func_void_std__string_std__string_Wrapper wrap_Func_void_std__string_std__string(Func_void_std__string_std__string value) noexcept {
     return Func_void_std__string_std__string_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>
+  /**
+   * Specialized version of `std::optional<std::function<void(const std::string& / * maskedValue * /, const std::string& / * rawValue * /)>>`.
+   */
+  using std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______ = std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>;
+  inline std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>> create_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______(const std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>& value) noexcept {
+    return std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>(value);
+  }
+  inline bool has_value_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______(const std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)> get_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______(const std::optional<std::function<void(const std::string& /* maskedValue */, const std::string& /* rawValue */)>>& optional) noexcept {
+    return optional.value();
   }
   
   // pragma MARK: std::shared_ptr<HybridNitroMaskSpec>

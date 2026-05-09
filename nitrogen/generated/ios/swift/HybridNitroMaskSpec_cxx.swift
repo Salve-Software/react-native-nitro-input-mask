@@ -143,20 +143,33 @@ open class HybridNitroMaskSpec_cxx {
     }
   }
   
-  public final var onChangeText: bridge.Func_void_std__string_std__string {
+  public final var onChangeText: bridge.std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______ {
     @inline(__always)
     get {
-      return { () -> bridge.Func_void_std__string_std__string in
-        let __closureWrapper = Func_void_std__string_std__string(self.__implementation.onChangeText)
-        return bridge.create_Func_void_std__string_std__string(__closureWrapper.toUnsafe())
+      return { () -> bridge.std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______ in
+        if let __unwrappedValue = self.__implementation.onChangeText {
+          return bridge.create_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______({ () -> bridge.Func_void_std__string_std__string in
+            let __closureWrapper = Func_void_std__string_std__string(__unwrappedValue)
+            return bridge.create_Func_void_std__string_std__string(__closureWrapper.toUnsafe())
+          }())
+        } else {
+          return .init()
+        }
       }()
     }
     @inline(__always)
     set {
-      self.__implementation.onChangeText = { () -> (String, String) -> Void in
-        let __wrappedFunction = bridge.wrap_Func_void_std__string_std__string(newValue)
-        return { (__maskedValue: String, __rawValue: String) -> Void in
-          __wrappedFunction.call(std.string(__maskedValue), std.string(__rawValue))
+      self.__implementation.onChangeText = { () -> ((_ maskedValue: String, _ rawValue: String) -> Void)? in
+        if bridge.has_value_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______(newValue) {
+          let __unwrapped = bridge.get_std__optional_std__function_void_const_std__string_____maskedValue_____const_std__string_____rawValue______(newValue)
+          return { () -> (String, String) -> Void in
+            let __wrappedFunction = bridge.wrap_Func_void_std__string_std__string(__unwrapped)
+            return { (__maskedValue: String, __rawValue: String) -> Void in
+              __wrappedFunction.call(std.string(__maskedValue), std.string(__rawValue))
+            }
+          }()
+        } else {
+          return nil
         }
       }()
     }
