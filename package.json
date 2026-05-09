@@ -11,8 +11,9 @@
     "typecheck": "tsc --noEmit",
     "clean": "git clean -dfX",
     "release": "semantic-release",
-    "build": "npm run typecheck && bob build",
-    "codegen": "nitrogen --logLevel=\"debug\" && npm run build && node post-script.js"
+    "build": "yarn typecheck && bob build",
+    "codegen": "nitrogen --logLevel=\"debug\" && yarn build && node post-script.js",
+    "example": "yarn workspace react-native-nitro-mask-example"
   },
   "keywords": [
     "react-native",
@@ -57,12 +58,12 @@
     "@semantic-release/git": "^10.0.1",
     "@types/jest": "^29.5.12",
     "@types/react": "19.2.0",
+    "conventional-changelog-conventionalcommits": "^9.1.0",
     "nitrogen": "0.35.6",
     "react": "19.2.3",
     "react-native": "0.84.1",
     "react-native-builder-bob": "^0.40.18",
     "react-native-nitro-modules": "0.35.6",
-    "conventional-changelog-conventionalcommits": "^9.1.0",
     "semantic-release": "^25.0.3",
     "typescript": "^5.8.3"
   },
