@@ -6,7 +6,7 @@ import android.widget.EditText
 import java.lang.ref.WeakReference
 
 // Weak reference avoids EditText → TextWatcher → EditText retain cycle
-class NitroInputMaskTextWatcher(var compiled: CompiledMask, editText: EditText) : TextWatcher {
+internal class NitroInputMaskTextWatcher(var compiled: CompiledMask, editText: EditText) : TextWatcher {
   private val editTextRef = WeakReference(editText)
   var isProgrammatic = false
   private var prevLength = 0
