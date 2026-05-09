@@ -29,7 +29,7 @@ function App(): React.JSX.Element {
 
       <Text style={styles.label}>Date</Text>
       <NitroInputMask
-        mask="99/99/9999"
+        mask="[1-12]/[1-31]/9999"
         value={date}
         onChangeText={setDate}
         style={styles.input}

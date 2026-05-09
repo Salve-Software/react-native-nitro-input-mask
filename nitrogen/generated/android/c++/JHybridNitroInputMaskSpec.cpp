@@ -41,11 +41,11 @@ namespace margelo::nitro::nitroinputmask {
   }
 
   // Properties
-  
+
 
   // Methods
   void JHybridNitroInputMaskSpec::attach(const std::string& nativeID, const std::string& mask) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* mask */)>("attach");
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>)>("attach");
     method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(mask));
   }
   void JHybridNitroInputMaskSpec::detach(const std::string& nativeID) {
@@ -53,7 +53,7 @@ namespace margelo::nitro::nitroinputmask {
     method(_javaPart, jni::make_jstring(nativeID));
   }
   void JHybridNitroInputMaskSpec::updateMask(const std::string& nativeID, const std::string& mask) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* mask */)>("updateMask");
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString>, jni::alias_ref<jni::JString>)>("updateMask");
     method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(mask));
   }
   void JHybridNitroInputMaskSpec::setValue(const std::string& nativeID, const std::string& rawValue) {

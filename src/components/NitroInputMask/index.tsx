@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 import { nitroModule } from '../../nitro-module';
 
 export const NitroInputMask = (props: NitroInputMaskProps) => {
-  const { mask, value } = props;
+  const { mask, value, ...rest } = props;
 
   const reactId = useId();
   const id = `nitro-input-mask-${reactId}`;
@@ -12,7 +12,6 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
   useEffect(() => {
     nitroModule.attach(id, mask);
     if (value != null) nitroModule.setValue(id, String(value));
-
     return () => nitroModule.detach(id);
   }, []);
 
@@ -27,7 +26,7 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
 
   return (
     <TextInput
-      {...props}
+      {...rest}
       nativeID={id}
     />
   )

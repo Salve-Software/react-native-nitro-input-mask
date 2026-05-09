@@ -8,19 +8,20 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
   private var proxies: [String: NitroInputMaskDelegateProxy] = [:]
 
   func attach(nativeID: String, mask: String) throws {
-    attemptAttach(nativeID: nativeID, mask: mask, retries: attachRetries)
+    let compiled = MaskEngine.compile(mask: mask)
+    attemptAttach(nativeID: nativeID, compiled: compiled, retries: attachRetries)
   }
 
-  private func attemptAttach(nativeID: String, mask: String, retries: Int) {
+  private func attemptAttach(nativeID: String, compiled: CompiledMask, retries: Int) {
     DispatchQueue.main.async { [weak self] in
       guard let self else { return }
       if let tf = self.findTextField(nativeID: nativeID) {
-        let proxy = NitroInputMaskDelegateProxy(mask: mask, original: tf.delegate)
+        let proxy = NitroInputMaskDelegateProxy(compiled: compiled, original: tf.delegate)
         tf.delegate = proxy
         self.proxies[nativeID] = proxy
       } else if retries > 0 {
         DispatchQueue.main.asyncAfter(deadline: .now() + attachRetryDelay) { [weak self] in
-          self?.attemptAttach(nativeID: nativeID, mask: mask, retries: retries - 1)
+          self?.attemptAttach(nativeID: nativeID, compiled: compiled, retries: retries - 1)
         }
       }
     }
@@ -37,7 +38,7 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
   }
 
   func updateMask(nativeID: String, mask: String) throws {
-    proxies[nativeID]?.mask = mask
+    proxies[nativeID]?.compiled = MaskEngine.compile(mask: mask)
   }
 
   func setValue(nativeID: String, rawValue: String) throws {
@@ -45,9 +46,9 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
       guard let self else { return }
       guard let proxy = self.proxies[nativeID] else { return }
       guard let tf = self.findTextField(nativeID: nativeID) else { return }
-      let (masked, _) = MaskEngine.apply(input: rawValue, mask: proxy.mask)
+      let (masked, _) = MaskEngine.apply(input: rawValue, compiled: proxy.compiled)
       tf.text = masked
-      CursorEngine.apply(to: tf, masked: masked, mask: proxy.mask)
+      CursorEngine.apply(to: tf, masked: masked, mask: proxy.compiled.expandedMask)
     }
   }
 

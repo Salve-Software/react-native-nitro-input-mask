@@ -44,7 +44,7 @@ namespace margelo::nitro::nitroinputmask {
 
     public:
       // Properties
-      
+
 
     public:
       // Methods
