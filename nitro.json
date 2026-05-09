@@ -1,0 +1,30 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": [
+    "nitromask"
+  ],
+  "ios": {
+    "iosModuleName": "NitroMask"
+  },
+  "android": {
+    "androidNamespace": [
+      "nitromask"
+    ],
+    "androidCxxLibName": "NitroMask"
+  },
+  "autolinking": {
+    "NitroMask": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridNitroMask"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridNitroMask"
+      }
+    }
+  },
+  "ignorePaths": [
+    "**/node_modules"
+  ]
+}
