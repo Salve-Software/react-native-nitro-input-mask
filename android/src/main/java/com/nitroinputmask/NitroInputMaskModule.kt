@@ -64,6 +64,7 @@ class HybridNitroInputMaskModule : HybridNitroInputMaskSpec() {
     val editText = state.editTextRef.get() ?: return
     val (masked, _) = MaskEngine.apply(rawValue, state.watcher.compiled)
     NitroInputMaskContext.reactContext?.currentActivity?.runOnUiThread {
+      if (editText.text.toString() == masked) return@runOnUiThread
       state.watcher.isProgrammatic = true
       editText.setText(masked)
       editText.setSelection(editText.text.length)

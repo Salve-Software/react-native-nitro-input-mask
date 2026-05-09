@@ -10,7 +10,7 @@ import NitroModules
 /// See ``HybridNitroInputMaskSpec``
 public protocol HybridNitroInputMaskSpec_protocol: HybridObject {
   // Properties
-
+  
 
   // Methods
   func attach(nativeID: String, mask: String) throws -> Void

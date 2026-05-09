@@ -27,23 +27,28 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     let isDeletion = string.isEmpty
     var (masked, _) = MaskEngine.apply(input: proposed, compiled: compiled)
 
-    // When deleting a separator, the mask re-inserts it, yielding the same text.
-    // Drop the last raw digit to actually move the cursor back.
+    // Separator deletion: masking re-produces the same text because the separator
+    // is always re-inserted. If there is data, block the deletion (text unchanged,
+    // cursor stays at the separator). If there is no data, clear the field.
     if isDeletion && masked == current {
       let raw = MaskEngine.extractRaw(from: current, compiled: compiled)
-      if !raw.isEmpty {
-        (masked, _) = MaskEngine.apply(input: String(raw.dropLast()), compiled: compiled)
-      }
+      masked = raw.isEmpty ? "" : current
     }
 
     textField.text = masked
+    let cursorOffset: Int
     if isDeletion {
-      let offset = min(range.location, masked.count)
-      if let pos = textField.position(from: textField.beginningOfDocument, offset: offset) {
-        textField.selectedTextRange = textField.textRange(from: pos, to: pos)
-      }
+      cursorOffset = min(range.location, masked.count)
     } else {
-      CursorEngine.apply(to: textField, masked: masked, mask: compiled.expandedMask)
+      cursorOffset = CursorEngine.offsetAfterInsertion(
+        oldMasked: current,
+        newMasked: masked,
+        mask: compiled.expandedMask,
+        at: range.location
+      )
+    }
+    if let pos = textField.position(from: textField.beginningOfDocument, offset: cursorOffset) {
+      textField.selectedTextRange = textField.textRange(from: pos, to: pos)
     }
     textField.sendActions(for: .editingChanged)
     return false

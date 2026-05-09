@@ -47,6 +47,7 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
       guard let proxy = self.proxies[nativeID] else { return }
       guard let tf = self.findTextField(nativeID: nativeID) else { return }
       let (masked, _) = MaskEngine.apply(input: rawValue, compiled: proxy.compiled)
+      guard tf.text != masked else { return }
       tf.text = masked
       CursorEngine.apply(to: tf, masked: masked, mask: proxy.compiled.expandedMask)
     }

@@ -84,7 +84,7 @@ open class HybridNitroInputMaskSpec_cxx {
     }
   }
 
-
+  
 
   /**
    * Get the memory size of the Swift class (plus size of any other allocations)
@@ -121,7 +121,7 @@ open class HybridNitroInputMaskSpec_cxx {
   }
 
   // Properties
-
+  
 
   // Methods
   @inline(__always)
@@ -134,7 +134,7 @@ open class HybridNitroInputMaskSpec_cxx {
       return bridge.create_Result_void_(__exceptionPtr)
     }
   }
-
+  
   @inline(__always)
   public final func detach(nativeID: std.string) -> bridge.Result_void_ {
     do {
@@ -145,7 +145,7 @@ open class HybridNitroInputMaskSpec_cxx {
       return bridge.create_Result_void_(__exceptionPtr)
     }
   }
-
+  
   @inline(__always)
   public final func updateMask(nativeID: std.string, mask: std.string) -> bridge.Result_void_ {
     do {
@@ -156,7 +156,7 @@ open class HybridNitroInputMaskSpec_cxx {
       return bridge.create_Result_void_(__exceptionPtr)
     }
   }
-
+  
   @inline(__always)
   public final func setValue(nativeID: std.string, rawValue: std.string) -> bridge.Result_void_ {
     do {

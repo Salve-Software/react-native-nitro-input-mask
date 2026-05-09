@@ -25,21 +25,21 @@ import com.margelo.nitro.core.HybridObject
 )
 abstract class HybridNitroInputMaskSpec: HybridObject() {
   // Properties
-
+  
 
   // Methods
   @DoNotStrip
   @Keep
   abstract fun attach(nativeID: String, mask: String): Unit
-
+  
   @DoNotStrip
   @Keep
   abstract fun detach(nativeID: String): Unit
-
+  
   @DoNotStrip
   @Keep
   abstract fun updateMask(nativeID: String, mask: String): Unit
-
+  
   @DoNotStrip
   @Keep
   abstract fun setValue(nativeID: String, rawValue: String): Unit
