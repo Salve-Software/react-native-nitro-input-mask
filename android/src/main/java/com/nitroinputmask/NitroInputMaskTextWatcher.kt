@@ -48,10 +48,10 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
     }
 
     val cursorPos = when {
-      engine.wantsTrailingCursor -> {
-        if (isSeparatorDeletion) {
-          changeStart  // move cursor to just before the separator
-        } else {
+      engine.wantsTrailingCursor -> when {
+        isSeparatorDeletion -> changeStart
+        isDeletion -> minOf(changeStart, masked.length)
+        else -> {
           val digitsAfter = countDigits(prevMasked, prevCursorEnd)
           cursorPositionWithDigitsAfter(digitsAfter, masked)
         }

@@ -48,19 +48,20 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     textField.text = masked
 
     if engine.wantsTrailingCursor {
+      let cursorPos: Int
       if isSeparatorDeletion {
-        // Move cursor to just before the separator so the next backspace deletes a real digit.
-        let cursorPos = range.location
-        if let pos = textField.position(from: textField.beginningOfDocument, offset: cursorPos) {
-          textField.selectedTextRange = textField.textRange(from: pos, to: pos)
-        }
+        // Separator deleted: move to just before it so next backspace hits a real digit.
+        cursorPos = range.location
+      } else if isDeletion {
+        // Real digit deleted: keep relative position (same as fixed-mask deletion path).
+        cursorPos = min(range.location, masked.count)
       } else {
-        // Money: use "digits from end" so cursor survives mid-string edits.
+        // Insertion: use "digits from end" so cursor survives magnitude changes.
         let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
-        let newCursorPos = cursorPositionWithDigitsAfter(digitsAfterCursor, in: masked)
-        if let pos = textField.position(from: textField.beginningOfDocument, offset: newCursorPos) {
-          textField.selectedTextRange = textField.textRange(from: pos, to: pos)
-        }
+        cursorPos = cursorPositionWithDigitsAfter(digitsAfterCursor, in: masked)
+      }
+      if let pos = textField.position(from: textField.beginningOfDocument, offset: cursorPos) {
+        textField.selectedTextRange = textField.textRange(from: pos, to: pos)
       }
     } else if let expandedMask = engine.expandedMask {
       let cursorOffset: Int
