@@ -14,7 +14,7 @@ struct CreditCardMaskEngine: MaskEngineProtocol {
       mask = "9999 999999 99999"
     case "diners":
       mask = "9999 999999 9999"
-    default: // visa-or-mastercard
+    default:  // visa-or-mastercard
       mask = "9999 9999 9999 9999"
     }
 

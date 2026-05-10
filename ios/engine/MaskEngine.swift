@@ -51,8 +51,8 @@ enum MaskEngine {
           i = mask.index(after: i)
           continue
         }
-        
-        let content = String(mask[mask.index(after: i)..<closeIdx]) // e.g. "1-12"
+
+        let content = String(mask[mask.index(after: i)..<closeIdx])  // e.g. "1-12"
         let parts = content.split(separator: "-", maxSplits: 1)
         if parts.count == 2, let from = Int(parts[0]), let to = Int(parts[1]) {
           let length = max(String(from).count, String(to).count)
@@ -60,8 +60,7 @@ enum MaskEngine {
             slots.append(.range(blockName: content, length: length, from: from, to: to))
             expandedMask.append("9")
           }
-        } 
-        else {
+        } else {
           // Malformed range — emit the entire "[...]" as individual literals.
           let literal = "[" + content + "]"
           for c in literal {
@@ -70,21 +69,20 @@ enum MaskEngine {
           }
         }
         i = mask.index(after: closeIdx)
-      } 
-      else {
+      } else {
         switch mask[i] {
         case "9":
           slots.append(.digit)
           expandedMask.append("9")
-          
+
         case "A":
           slots.append(.letter)
           expandedMask.append("A")
-          
+
         case "*":
           slots.append(.any)
           expandedMask.append("*")
-          
+
         default:
           slots.append(.literal(mask[i]))
           expandedMask.append(mask[i])
@@ -116,25 +114,31 @@ enum MaskEngine {
       switch slot {
       case .digit:
         if c.isNumber {
-          masked.append(c); raw.append(c); ii += 1; si += 1
-        } 
-        else {
+          masked.append(c)
+          raw.append(c)
+          ii += 1
+          si += 1
+        } else {
           ii += 1
         }
 
       case .letter:
         if c.isLetter {
-          masked.append(c); raw.append(c); ii += 1; si += 1
-        } 
-        else {
+          masked.append(c)
+          raw.append(c)
+          ii += 1
+          si += 1
+        } else {
           ii += 1
         }
 
       case .any:
         if c.isLetter || c.isNumber {
-          masked.append(c); raw.append(c); ii += 1; si += 1
-        } 
-        else {
+          masked.append(c)
+          raw.append(c)
+          ii += 1
+          si += 1
+        } else {
           ii += 1
         }
 
@@ -148,15 +152,15 @@ enum MaskEngine {
           let partial = blockPartials[blockName, default: ""]
           let newPartial = partial + String(c)
           if isValidPrefix(partial: newPartial, from: from, to: to, length: length) {
-            masked.append(c); raw.append(c)
+            masked.append(c)
+            raw.append(c)
             blockPartials[blockName] = newPartial
-            ii += 1; si += 1
-          } 
-          else {
+            ii += 1
+            si += 1
+          } else {
             ii += 1
           }
-        } 
-        else {
+        } else {
           ii += 1
         }
       }
@@ -195,8 +199,7 @@ enum MaskEngine {
         raw.append(textChars[ti])
         ti += 1
         mi += 1
-      } 
-      else {
+      } else {
         if textChars[ti] == maskChars[mi] { ti += 1 }
         mi += 1
       }
@@ -212,7 +215,7 @@ enum MaskEngine {
       let partialMin = Int(partial + String(repeating: "0", count: remaining)),
       let partialMax = Int(partial + String(repeating: "9", count: remaining))
     else { return false }
-    
+
     return partialMin <= to && partialMax >= from
   }
 }

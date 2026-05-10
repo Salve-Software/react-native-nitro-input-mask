@@ -17,33 +17,24 @@ struct DatetimeMaskEngine: MaskEngineProtocol {
 
   // MARK: - Format → Pattern conversion
 
+  private static let tokens: [(token: String, pattern: String)] = [
+    ("YYYY", "9999"),
+    ("MM", "[1-12]"),
+    ("DD", "[1-31]"),
+    ("HH", "[0-23]"),
+    ("hh", "[1-12]"),
+    ("mm", "[0-59]"),
+    ("ss", "[0-59]"),
+  ]
+
   private static func formatToPattern(_ format: String) -> String {
     var result = ""
     var i = format.startIndex
 
     while i < format.endIndex {
-      // Match longer tokens first
-      if format[i...].hasPrefix("YYYY") {
-        result += "9999"
-        i = format.index(i, offsetBy: 4)
-      } else if format[i...].hasPrefix("MM") {
-        result += "[1-12]"
-        i = format.index(i, offsetBy: 2)
-      } else if format[i...].hasPrefix("DD") {
-        result += "[1-31]"
-        i = format.index(i, offsetBy: 2)
-      } else if format[i...].hasPrefix("HH") {
-        result += "[0-23]"
-        i = format.index(i, offsetBy: 2)
-      } else if format[i...].hasPrefix("hh") {
-        result += "[1-12]"
-        i = format.index(i, offsetBy: 2)
-      } else if format[i...].hasPrefix("mm") {
-        result += "[0-59]"
-        i = format.index(i, offsetBy: 2)
-      } else if format[i...].hasPrefix("ss") {
-        result += "[0-59]"
-        i = format.index(i, offsetBy: 2)
+      if let match = tokens.first(where: { format[i...].hasPrefix($0.token) }) {
+        result += match.pattern
+        i = format.index(i, offsetBy: match.token.count)
       } else {
         result.append(format[i])
         i = format.index(after: i)

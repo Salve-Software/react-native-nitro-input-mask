@@ -9,12 +9,12 @@ struct MoneyMaskEngine: MaskEngineProtocol {
   private let zeroCents: Bool
 
   init(options: NitroMaskOptions) {
-    self.precision   = Int(options.precision ?? 2)
-    self.separator   = options.separator  ?? ","
-    self.delimiter   = options.delimiter  ?? "."
-    self.unit        = options.unit       ?? ""
-    self.suffixUnit  = options.suffixUnit ?? ""
-    self.zeroCents   = options.zeroCents  ?? false
+    self.precision = Int(options.precision ?? 2)
+    self.separator = options.separator ?? ","
+    self.delimiter = options.delimiter ?? "."
+    self.unit = options.unit ?? ""
+    self.suffixUnit = options.suffixUnit ?? ""
+    self.zeroCents = options.zeroCents ?? false
   }
 
   func apply(input: String) -> (masked: String, raw: String) {
@@ -31,15 +31,8 @@ struct MoneyMaskEngine: MaskEngineProtocol {
     let padded = String(repeating: "0", count: max(0, minLength - digits.count)) + digits
 
     // Split integer and decimal parts
-    let splitIdx: String.Index
-    if effectivePrecision > 0 {
-      splitIdx = padded.index(padded.endIndex, offsetBy: -effectivePrecision)
-    } else {
-      splitIdx = padded.endIndex
-    }
-
-    var intPart = String(padded[padded.startIndex..<splitIdx])
-    let centPart = effectivePrecision > 0 ? String(padded[splitIdx...]) : ""
+    let centPart = effectivePrecision > 0 ? String(padded.suffix(effectivePrecision)) : ""
+    var intPart = effectivePrecision > 0 ? String(padded.dropLast(effectivePrecision)) : padded
 
     // Remove leading zeros from intPart, keep at least "0"
     while intPart.count > 1 && intPart.hasPrefix("0") {

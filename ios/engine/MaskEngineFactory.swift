@@ -9,7 +9,7 @@ enum MaskEngineFactory {
       return DatetimeMaskEngine(format: options.format ?? "DD/MM/YYYY")
     case "credit-card":
       return CreditCardMaskEngine(options: options)
-    default: // "custom"
+    default:  // "custom"
       return CustomMaskEngine(mask: options.mask ?? "")
     }
   }

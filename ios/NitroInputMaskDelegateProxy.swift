@@ -59,6 +59,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
         // Otherwise use the digits-before anchor so the cursor survives a
         // thousands separator being removed (e.g. 1.123,55 → 112,55).
         let digitsAfterDeleted = countDigits(in: current, from: range.location + range.length)
+
         if digitsAfterDeleted == 0 {
           cursorPos = masked.count
         } else {
@@ -75,6 +76,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
       }
     } else if let expandedMask = engine.expandedMask {
       let cursorOffset: Int
+
       if isDeletion {
         cursorOffset = min(range.location, masked.count)
       } else {
@@ -92,6 +94,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
       }
     } else {
       let endPos = masked.count
+
       if let pos = textField.position(from: textField.beginningOfDocument, offset: endPos) {
         textField.selectedTextRange = textField.textRange(from: pos, to: pos)
       }
@@ -123,6 +126,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     let dataTokens: Set<Character> = ["9", "A", "*"]
     let maskChars = Array(mask)
     var idx = offset
+
     while idx < maskChars.count && !dataTokens.contains(maskChars[idx]) {
       idx += 1
     }
@@ -142,9 +146,11 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
   /// Falls back to `text.count` when fewer digits exist.
   private func positionAfterDigits(_ count: Int, in text: String) -> Int {
     let chars = Array(text)
+
     if count == 0 {
       return chars.enumerated().first(where: { $0.element.isNumber })?.offset ?? 0
     }
+
     var found = 0
     for (i, c) in chars.enumerated() {
       if c.isNumber {
@@ -160,6 +166,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     guard start < text.count else { return 0 }
     let chars = Array(text)
     var count = 0
+
     for i in start..<chars.count where chars[i].isNumber {
       count += 1
     }
@@ -174,6 +181,7 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     let chars = Array(text)
     var digitsFromEnd = 0
     var pos = chars.count
+
     while pos > 0 {
       pos -= 1
       if chars[pos].isNumber {
