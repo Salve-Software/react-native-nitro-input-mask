@@ -6,7 +6,7 @@ import android.widget.EditText
 import java.lang.ref.WeakReference
 
 // Weak reference avoids EditText → TextWatcher → EditText retain cycle
-internal class NitroInputMaskTextWatcher(var compiled: CompiledMask, editText: EditText) : TextWatcher {
+internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editText: EditText) : TextWatcher {
   private val editTextRef = WeakReference(editText)
   var isProgrammatic = false
   private var prevLength = 0
@@ -28,22 +28,28 @@ internal class NitroInputMaskTextWatcher(var compiled: CompiledMask, editText: E
     if (isProgrammatic) return
     val editText = editTextRef.get() ?: return
     val input = s?.toString()?.replace("\n", "") ?: ""
-    if (compiled.isEmpty) return
 
-    var (masked, _) = MaskEngine.apply(input, compiled)
+    var (masked, _) = engine.apply(input)
 
     // Separator deletion: masking re-produces the same text because the separator
     // is always re-inserted. If there is data, block the deletion (text unchanged,
     // cursor stays at the separator). If there is no data, clear the field.
     if (isDeletion && masked == prevMasked) {
-      val raw = MaskEngine.extractRaw(input, compiled)
+      val (_, raw) = engine.apply(input)
       masked = if (raw.isEmpty()) "" else prevMasked
     }
 
-    val cursorPos = if (isDeletion) {
-      minOf(changeStart, masked.length)
-    } else {
-      CursorEngine.offsetAfterInsertion(prevMasked, masked, compiled.expandedMask, changeStart)
+    val cursorPos = when {
+      engine.wantsTrailingCursor -> masked.length
+      isDeletion -> minOf(changeStart, masked.length)
+      else -> {
+        val expMask = engine.expandedMask
+        if (expMask != null) {
+          CursorEngine.offsetAfterInsertion(prevMasked, masked, expMask, changeStart)
+        } else {
+          masked.length
+        }
+      }
     }
 
     if (masked == s?.toString()) {

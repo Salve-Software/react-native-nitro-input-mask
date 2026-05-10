@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.margelo.nitro.nitroinputmask.HybridNitroInputMaskSpec
+import com.margelo.nitro.nitroinputmask.NitroMaskOptions
 import java.lang.ref.WeakReference
 
 private const val ATTACH_RETRIES = 5
@@ -24,23 +25,23 @@ class HybridNitroInputMaskModule : HybridNitroInputMaskSpec() {
 
   private val states = mutableMapOf<String, MaskState>()
 
-  override fun attach(nativeID: String, mask: String) {
-    val compiled = MaskEngine.compile(mask)
-    attemptAttach(nativeID, compiled, ATTACH_RETRIES)
+  override fun attach(nativeID: String, maskType: String, options: NitroMaskOptions) {
+    val engine = MaskEngineFactory.build(maskType, options)
+    attemptAttach(nativeID, engine, ATTACH_RETRIES)
   }
 
-  private fun attemptAttach(nativeID: String, compiled: CompiledMask, retries: Int) {
+  private fun attemptAttach(nativeID: String, engine: MaskEngineProtocol, retries: Int) {
     val context = NitroInputMaskContext.reactContext ?: return
     context.currentActivity?.runOnUiThread {
       val root = context.currentActivity?.window?.decorView ?: return@runOnUiThread
       val editText = findEditText(root, nativeID)
       if (editText != null) {
-        val watcher = NitroInputMaskTextWatcher(compiled, editText)
+        val watcher = NitroInputMaskTextWatcher(engine, editText)
         states[nativeID] = MaskState(WeakReference(editText), watcher)
         insertWatcherFirst(editText, watcher)
       } else if (retries > 0) {
         Handler(Looper.getMainLooper()).postDelayed(
-          { attemptAttach(nativeID, compiled, retries - 1) },
+          { attemptAttach(nativeID, engine, retries - 1) },
           ATTACH_RETRY_DELAY_MS
         )
       }
@@ -54,20 +55,24 @@ class HybridNitroInputMaskModule : HybridNitroInputMaskSpec() {
     }
   }
 
-  override fun updateMask(nativeID: String, mask: String) {
-    val compiled = MaskEngine.compile(mask)
-    states[nativeID]?.watcher?.compiled = compiled
+  override fun updateMask(nativeID: String, maskType: String, options: NitroMaskOptions) {
+    val engine = MaskEngineFactory.build(maskType, options)
+    states[nativeID]?.watcher?.engine = engine
   }
 
   override fun setValue(nativeID: String, rawValue: String) {
     val state = states[nativeID] ?: return
     val editText = state.editTextRef.get() ?: return
-    val (masked, _) = MaskEngine.apply(rawValue, state.watcher.compiled)
+    val (masked, _) = state.watcher.engine.apply(rawValue)
     NitroInputMaskContext.reactContext?.currentActivity?.runOnUiThread {
       if (editText.text.toString() == masked) return@runOnUiThread
       state.watcher.isProgrammatic = true
       editText.setText(masked)
-      editText.setSelection(editText.text.length)
+      if (state.watcher.engine.wantsTrailingCursor) {
+        editText.setSelection(editText.text.length)
+      } else {
+        editText.setSelection(editText.text.length)
+      }
       state.watcher.isProgrammatic = false
     }
   }

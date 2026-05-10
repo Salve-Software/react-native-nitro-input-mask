@@ -3,13 +3,14 @@ package com.nitroinputmask
 import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.margelo.nitro.nitroinputmask.HybridNitroInputMaskServiceSpec
+import com.margelo.nitro.nitroinputmask.NitroMaskOptions
 
 @Keep
 @DoNotStrip
 class HybridNitroInputMaskServiceModule : HybridNitroInputMaskServiceSpec() {
-  override fun applyMask(value: String, mask: String): String {
-    val compiled = MaskEngine.compile(mask)
-    val (masked, _) = MaskEngine.apply(value, compiled)
+  override fun applyMask(value: String, maskType: String, options: NitroMaskOptions): String {
+    val engine = MaskEngineFactory.build(maskType, options)
+    val (masked, _) = engine.apply(value)
     return masked
   }
 }
