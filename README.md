@@ -144,12 +144,12 @@ NitroInputMaskService.applyMask({
 
 Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput#props).
 
-| maskType | maskOptions | Description |
+| maskType | maskOptions | Docs |
 |---|---|---|
-| `'custom'` (default) | `{ mask: string }` | Pattern-based mask |
-| `'money'` | `{ precision?, separator?, delimiter?, unit?, suffixUnit?, zeroCents? }` | RTL currency formatting |
-| `'datetime'` | `{ format: string }` | Date/time with tokens `DD`, `MM`, `YYYY`, `HH`, `hh`, `mm`, `ss` |
-| `'credit-card'` | `{ issuer?, obfuscated? }` | Credit card grouping; `issuer`: `'visa-or-mastercard'` (default), `'amex'`, `'diners'` |
+| `'custom'` (default) | `{ mask: string }` | [docs/custom.md](./docs/custom.md) |
+| `'money'` | `{ precision?, separator?, delimiter?, unit?, suffixUnit?, zeroCents? }` | [docs/money.md](./docs/money.md) |
+| `'datetime'` | `{ format: string }` | [docs/datetime.md](./docs/datetime.md) |
+| `'credit-card'` | `{ issuer?, obfuscated? }` | [docs/credit-card.md](./docs/credit-card.md) |
 
 ### `NitroInputMaskService.applyMask(props)`
 
