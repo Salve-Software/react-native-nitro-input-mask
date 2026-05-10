@@ -9,7 +9,6 @@ import com.margelo.nitro.nitroinputmask.NitroInputMaskOnLoad
 
 class NitroInputMaskPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    NitroInputMaskContext.reactContext = reactContext
     return null
   }
 
@@ -18,6 +17,7 @@ class NitroInputMaskPackage : BaseReactPackage() {
   }
 
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    NitroInputMaskContext.reactContext = reactContext
     return emptyList()
   }
 
