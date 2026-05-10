@@ -8,15 +8,16 @@ Native input masks for React Native — zero JS flicker, built on [Nitro Modules
 
 ## Why
 
-Most React Native mask libraries process input in JavaScript — the text has to cross the bridge before the mask is applied, causing a visible flicker on every keystroke.
+Most React Native mask libraries apply the mask in JavaScript — every keystroke crosses the bridge before the field is updated, causing a visible flicker.
 
-`react-native-nitro-input-mask` runs the entire mask engine natively (Swift on iOS, Kotlin on Android) through Nitro Modules. The TextInput never leaves the native thread.
+`react-native-nitro-input-mask` runs the entire mask engine natively (Swift on iOS, Kotlin on Android) via Nitro Modules, so the field is updated synchronously with no flicker.
 
 ## Features
 
 - **Zero flicker** — mask applied synchronously on the native side
 - **`<NitroInputMask />`** — drop-in replacement for React Native's `<TextInput />`
 - **`NitroInputMaskService`** — apply a mask to any string without a component
+- **Built-in mask types** — `custom`, `money`, `datetime`, `credit-card`
 - **Range tokens** — e.g. `[1-12]` for month, `[1-31]` for day
 - iOS and Android support
 
@@ -53,9 +54,10 @@ cd ios && pod install
 
 ### `<NitroInputMask />`
 
-Drop-in replacement for `<TextInput />`. Accepts all standard `TextInputProps` plus a `mask` prop.
+Drop-in replacement for `<TextInput />`. Accepts all standard `TextInputProps` plus `maskType` and `maskOptions`.
 
 ```tsx
+import React, { useState } from 'react'
 import { NitroInputMask } from 'react-native-nitro-input-mask'
 
 function CPFInput() {
@@ -63,7 +65,7 @@ function CPFInput() {
 
   return (
     <NitroInputMask
-      mask="999.999.999-99"
+      maskOptions={{ mask: '999.999.999-99' }}
       placeholder="000.000.000-00"
       keyboardType="numeric"
       onChangeText={setValue}
@@ -72,24 +74,58 @@ function CPFInput() {
 }
 ```
 
+```tsx
+// Money
+<NitroInputMask
+  maskType="money"
+  maskOptions={{ unit: 'R$ ', precision: 2 }}
+  keyboardType="numeric"
+  onChangeText={setValue}
+/>
+
+// Date
+<NitroInputMask
+  maskType="datetime"
+  maskOptions={{ format: 'DD/MM/YYYY' }}
+  keyboardType="numeric"
+  onChangeText={setValue}
+/>
+
+// Credit card
+<NitroInputMask
+  maskType="credit-card"
+  maskOptions={{ issuer: 'visa-or-mastercard' }}
+  keyboardType="numeric"
+  onChangeText={setValue}
+/>
+```
+
 ### `NitroInputMaskService`
 
-Apply a mask to any string — useful for formatting values outside of a text input (lists, previews, etc.).
+Apply a mask to any string — useful for formatting values in lists, previews, etc.
 
 ```tsx
 import { NitroInputMaskService } from 'react-native-nitro-input-mask'
 
-const cpf = NitroInputMaskService.applyMask({
+NitroInputMaskService.applyMask({
   value: '12345678901',
-  mask: '999.999.999-99',
+  maskOptions: { mask: '999.999.999-99' },
 })
 // '123.456.789-01'
 
-const phone = NitroInputMaskService.applyMask({
-  value: '11987654321',
-  mask: '(99) 99999-9999',
+NitroInputMaskService.applyMask({
+  value: '123456',
+  maskType: 'money',
+  maskOptions: { unit: 'R$ ', precision: 2 },
 })
-// '(11) 98765-4321'
+// 'R$ 1.234,56'
+
+NitroInputMaskService.applyMask({
+  value: '11222025',
+  maskType: 'datetime',
+  maskOptions: { format: 'DD/MM/YYYY' },
+})
+// '11/22/2025'
 ```
 
 ## Mask Syntax
@@ -102,27 +138,28 @@ const phone = NitroInputMaskService.applyMask({
 | `[n-m]` | Integer in range n–m (e.g. `[1-12]`, `[1-31]`) |
 | Any other character | Literal — inserted as-is |
 
-See [docs/mask-syntax.md](./docs/mask-syntax.md) for examples with ranges and edge cases.
-
 ## API
 
 ### `<NitroInputMask />`
 
 Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput#props).
 
-| Prop | Type | Required | Description |
-|---|---|---|---|
-| `mask` | `string` | ✓ | Mask pattern to apply |
-| ...TextInputProps | | | All standard TextInput props |
+| maskType | maskOptions | Description |
+|---|---|---|
+| `'custom'` (default) | `{ mask: string }` | Pattern-based mask |
+| `'money'` | `{ precision?, separator?, delimiter?, unit?, suffixUnit?, zeroCents? }` | RTL currency formatting |
+| `'datetime'` | `{ format: string }` | Date/time with tokens `DD`, `MM`, `YYYY`, `HH`, `hh`, `mm`, `ss` |
+| `'credit-card'` | `{ issuer?, obfuscated? }` | Credit card grouping; `issuer`: `'visa-or-mastercard'` (default), `'amex'`, `'diners'` |
 
 ### `NitroInputMaskService.applyMask(props)`
+
+Accepts the same `maskType` + `maskOptions` as the component, plus:
 
 | Prop | Type | Description |
 |---|---|---|
 | `value` | `string` | The raw string to mask |
-| `mask` | `string` | The mask pattern to apply |
 
-Returns the masked `string`. Throws if `value` exceeds 1000 characters or `mask` exceeds 200 characters.
+Returns the masked `string`.
 
 ## Contributing
 
