@@ -1,3 +1,3 @@
-import type { MaskConfig } from '../../../components/NitroInputMask/types/NitroInputMaskProps'
+import type { MaskConfig } from "../../../types";
 
-export type IApplyMaskProps = { value: string } & MaskConfig
+export type IApplyMaskProps = { value: string } & MaskConfig;
