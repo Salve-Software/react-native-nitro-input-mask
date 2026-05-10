@@ -27,6 +27,8 @@ Most React Native mask libraries process input in JavaScript — the text has to
 | React Native | 0.76 |
 | Node | 18 |
 
+> **New Architecture only.** This library uses [Nitro Modules](https://github.com/mrousavy/nitro), which requires the React Native New Architecture (Fabric + TurboModules). The Old Architecture (Paper/Bridge) is not supported.
+
 > **Note:** Nitro Views (used by `<NitroInputMask />`) require React Native ≥ 0.78.
 
 ## Installation
