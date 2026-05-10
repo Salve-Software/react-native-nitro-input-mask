@@ -79,7 +79,7 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
   }
 
   private fun positionAfterDigits(count: Int, text: String): Int {
-    if (count == 0) return 0
+    if (count == 0) return text.indexOfFirst { it.isDigit() }.takeIf { it >= 0 } ?: 0
     var found = 0
     for (i in text.indices) {
       if (text[i].isDigit()) {

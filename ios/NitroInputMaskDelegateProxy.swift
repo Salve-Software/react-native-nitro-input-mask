@@ -130,10 +130,14 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
   }
 
   /// Returns the position in `text` immediately after the `count`-th digit.
+  /// When `count` is 0, returns the index of the first digit (past any unit
+  /// prefix) so the cursor lands before the content, not before the unit.
   /// Falls back to `text.count` when fewer digits exist.
   private func positionAfterDigits(_ count: Int, in text: String) -> Int {
-    if count == 0 { return 0 }
     let chars = Array(text)
+    if count == 0 {
+      return chars.enumerated().first(where: { $0.element.isNumber })?.offset ?? 0
+    }
     var found = 0
     for (i, c) in chars.enumerated() {
       if c.isNumber {
