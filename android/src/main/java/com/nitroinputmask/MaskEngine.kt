@@ -194,14 +194,14 @@ object MaskEngine {
       }
     }
 
-    // Append any trailing literal slots that remain after input is exhausted.
-    while (si < slots.size) {
+    // Only emit trailing literals if some input was actually consumed.
+    if (ii > 0) while (si < slots.size) {
       val slot = slots[si]
-      
+
       if (slot is Slot.Literal) {
         masked.append(slot.char)
         si++
-      } 
+      }
       else {
         break
       }
