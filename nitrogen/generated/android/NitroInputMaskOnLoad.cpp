@@ -15,6 +15,7 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
+#include "JHybridNitroInputMaskServiceSpec.hpp"
 #include "JHybridNitroInputMaskSpec.hpp"
 #include <NitroModules/DefaultConstructableObject.hpp>
 
@@ -34,12 +35,21 @@ struct JHybridNitroInputMaskSpecImpl: public jni::JavaClass<JHybridNitroInputMas
     return javaPart->getJHybridNitroInputMaskSpec();
   }
 };
+struct JHybridNitroInputMaskServiceSpecImpl: public jni::JavaClass<JHybridNitroInputMaskServiceSpecImpl, JHybridNitroInputMaskServiceSpec::JavaPart> {
+  static constexpr auto kJavaDescriptor = "Lcom/nitroinputmask/HybridNitroInputMaskServiceModule;";
+  static std::shared_ptr<JHybridNitroInputMaskServiceSpec> create() {
+    static const auto constructorFn = javaClassStatic()->getConstructor<JHybridNitroInputMaskServiceSpecImpl::javaobject()>();
+    jni::local_ref<JHybridNitroInputMaskServiceSpec::JavaPart> javaPart = javaClassStatic()->newObject(constructorFn);
+    return javaPart->getJHybridNitroInputMaskServiceSpec();
+  }
+};
 
 void registerAllNatives() {
   using namespace margelo::nitro;
   using namespace margelo::nitro::nitroinputmask;
 
   // Register native JNI methods
+  margelo::nitro::nitroinputmask::JHybridNitroInputMaskServiceSpec::CxxPart::registerNatives();
   margelo::nitro::nitroinputmask::JHybridNitroInputMaskSpec::CxxPart::registerNatives();
 
   // Register Nitro Hybrid Objects
@@ -47,6 +57,12 @@ void registerAllNatives() {
     "NitroInputMask",
     []() -> std::shared_ptr<HybridObject> {
       return JHybridNitroInputMaskSpecImpl::create();
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "NitroInputMaskService",
+    []() -> std::shared_ptr<HybridObject> {
+      return JHybridNitroInputMaskServiceSpecImpl::create();
     }
   );
 }

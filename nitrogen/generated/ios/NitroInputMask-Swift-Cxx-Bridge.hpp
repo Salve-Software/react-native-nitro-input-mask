@@ -8,18 +8,24 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `HybridNitroInputMaskServiceSpec` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { class HybridNitroInputMaskServiceSpec; }
 // Forward declaration of `HybridNitroInputMaskSpec` to properly resolve imports.
 namespace margelo::nitro::nitroinputmask { class HybridNitroInputMaskSpec; }
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridNitroInputMaskServiceSpec_cxx` to properly resolve imports.
+namespace NitroInputMask { class HybridNitroInputMaskServiceSpec_cxx; }
 // Forward declaration of `HybridNitroInputMaskSpec_cxx` to properly resolve imports.
 namespace NitroInputMask { class HybridNitroInputMaskSpec_cxx; }
 
 // Include C++ defined types
+#include "HybridNitroInputMaskServiceSpec.hpp"
 #include "HybridNitroInputMaskSpec.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <string>
 
 /**
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
@@ -27,6 +33,27 @@ namespace NitroInputMask { class HybridNitroInputMaskSpec_cxx; }
  */
 namespace margelo::nitro::nitroinputmask::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<HybridNitroInputMaskServiceSpec>
+  /**
+   * Specialized version of `std::shared_ptr<HybridNitroInputMaskServiceSpec>`.
+   */
+  using std__shared_ptr_HybridNitroInputMaskServiceSpec_ = std::shared_ptr<HybridNitroInputMaskServiceSpec>;
+  std::shared_ptr<HybridNitroInputMaskServiceSpec> create_std__shared_ptr_HybridNitroInputMaskServiceSpec_(void* NON_NULL swiftUnsafePointer) noexcept;
+  void* NON_NULL get_std__shared_ptr_HybridNitroInputMaskServiceSpec_(std__shared_ptr_HybridNitroInputMaskServiceSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<HybridNitroInputMaskServiceSpec>
+  using std__weak_ptr_HybridNitroInputMaskServiceSpec_ = std::weak_ptr<HybridNitroInputMaskServiceSpec>;
+  inline std__weak_ptr_HybridNitroInputMaskServiceSpec_ weakify_std__shared_ptr_HybridNitroInputMaskServiceSpec_(const std::shared_ptr<HybridNitroInputMaskServiceSpec>& strong) noexcept { return strong; }
+  
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) noexcept {
+    return Result<std::string>::withValue(value);
+  }
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) noexcept {
+    return Result<std::string>::withError(error);
+  }
+  
   // pragma MARK: std::shared_ptr<HybridNitroInputMaskSpec>
   /**
    * Specialized version of `std::shared_ptr<HybridNitroInputMaskSpec>`.

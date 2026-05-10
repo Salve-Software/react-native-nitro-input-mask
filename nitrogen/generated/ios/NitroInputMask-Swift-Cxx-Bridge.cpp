@@ -8,12 +8,29 @@
 #include "NitroInputMask-Swift-Cxx-Bridge.hpp"
 
 // Include C++ implementation defined types
+#include "HybridNitroInputMaskServiceSpecSwift.hpp"
 #include "HybridNitroInputMaskSpecSwift.hpp"
 #include "NitroInputMask-Swift-Cxx-Umbrella.hpp"
 #include <NitroModules/NitroDefines.hpp>
 
 namespace margelo::nitro::nitroinputmask::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<HybridNitroInputMaskServiceSpec>
+  std::shared_ptr<HybridNitroInputMaskServiceSpec> create_std__shared_ptr_HybridNitroInputMaskServiceSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
+    NitroInputMask::HybridNitroInputMaskServiceSpec_cxx swiftPart = NitroInputMask::HybridNitroInputMaskServiceSpec_cxx::fromUnsafe(swiftUnsafePointer);
+    return std::make_shared<margelo::nitro::nitroinputmask::HybridNitroInputMaskServiceSpecSwift>(swiftPart);
+  }
+  void* NON_NULL get_std__shared_ptr_HybridNitroInputMaskServiceSpec_(std__shared_ptr_HybridNitroInputMaskServiceSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::nitroinputmask::HybridNitroInputMaskServiceSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::nitroinputmask::HybridNitroInputMaskServiceSpecSwift>(cppType);
+    #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridNitroInputMaskServiceSpec\" is not implemented in Swift!");
+    }
+    #endif
+    NitroInputMask::HybridNitroInputMaskServiceSpec_cxx& swiftPart = swiftWrapper->getSwiftPart();
+    return swiftPart.toUnsafe();
+  }
+  
   // pragma MARK: std::shared_ptr<HybridNitroInputMaskSpec>
   std::shared_ptr<HybridNitroInputMaskSpec> create_std__shared_ptr_HybridNitroInputMaskSpec_(void* NON_NULL swiftUnsafePointer) noexcept {
     NitroInputMask::HybridNitroInputMaskSpec_cxx swiftPart = NitroInputMask::HybridNitroInputMaskSpec_cxx::fromUnsafe(swiftUnsafePointer);

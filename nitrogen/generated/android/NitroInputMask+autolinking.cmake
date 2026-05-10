@@ -33,8 +33,10 @@ target_sources(
   # Autolinking Setup
   ../nitrogen/generated/android/NitroInputMaskOnLoad.cpp
   # Shared Nitrogen C++ sources
+  ../nitrogen/generated/shared/c++/HybridNitroInputMaskServiceSpec.cpp
   ../nitrogen/generated/shared/c++/HybridNitroInputMaskSpec.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridNitroInputMaskServiceSpec.cpp
   ../nitrogen/generated/android/c++/JHybridNitroInputMaskSpec.cpp
 )
 
