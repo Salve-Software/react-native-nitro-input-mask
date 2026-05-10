@@ -53,8 +53,11 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
         // Separator deleted: move to just before it so next backspace hits a real digit.
         cursorPos = range.location
       } else if isDeletion {
-        // Real digit deleted: keep relative position (same as fixed-mask deletion path).
-        cursorPos = min(range.location, masked.count)
+        // Count digits before the deleted range in the old text, then land after
+        // the same number of digits in the new text. This survives separator
+        // additions/removals (e.g. thousands dot disappearing after a deletion).
+        let digitsBeforeRange = countDigitsUpTo(in: current, upTo: range.location)
+        cursorPos = positionAfterDigits(digitsBeforeRange, in: masked)
       } else {
         // Insertion: use "digits from end" so cursor survives magnitude changes.
         let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
@@ -117,6 +120,28 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
       idx += 1
     }
     return min(idx, masked.count)
+  }
+
+  /// Counts digit characters in `text` before index `upTo`.
+  private func countDigitsUpTo(in text: String, upTo: Int) -> Int {
+    let chars = Array(text)
+    let limit = min(upTo, chars.count)
+    return chars[0..<limit].filter { $0.isNumber }.count
+  }
+
+  /// Returns the position in `text` immediately after the `count`-th digit.
+  /// Falls back to `text.count` when fewer digits exist.
+  private func positionAfterDigits(_ count: Int, in text: String) -> Int {
+    if count == 0 { return 0 }
+    let chars = Array(text)
+    var found = 0
+    for (i, c) in chars.enumerated() {
+      if c.isNumber {
+        found += 1
+        if found == count { return i + 1 }
+      }
+    }
+    return text.count
   }
 
   /// Returns how many digit characters exist in `text` starting from `start`.

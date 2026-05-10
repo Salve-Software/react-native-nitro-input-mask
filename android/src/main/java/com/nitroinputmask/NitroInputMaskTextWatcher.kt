@@ -50,7 +50,7 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
     val cursorPos = when {
       engine.wantsTrailingCursor -> when {
         isSeparatorDeletion -> changeStart
-        isDeletion -> minOf(changeStart, masked.length)
+        isDeletion -> positionAfterDigits(prevMasked.take(changeStart).count { it.isDigit() }, masked)
         else -> {
           val digitsAfter = countDigits(prevMasked, prevCursorEnd)
           cursorPositionWithDigitsAfter(digitsAfter, masked)
@@ -76,6 +76,18 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
       isProgrammatic = false
       editText.setSelection(minOf(cursorPos, editText.text.length))
     }
+  }
+
+  private fun positionAfterDigits(count: Int, text: String): Int {
+    if (count == 0) return 0
+    var found = 0
+    for (i in text.indices) {
+      if (text[i].isDigit()) {
+        found++
+        if (found == count) return i + 1
+      }
+    }
+    return text.length
   }
 
   private fun skipLeadingLiterals(offset: Int, masked: String, mask: String): Int {
