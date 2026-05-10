@@ -19,12 +19,10 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
     nitroModule.attach(id, resolvedMaskType, maskOptions ?? {});
     if (value != null) nitroModule.setValue(id, String(value));
     return () => nitroModule.detach(id);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     nitroModule.updateMask(id, resolvedMaskType, maskOptions ?? {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedMaskType, maskOptionsJson]);
 
   useEffect(() => {
