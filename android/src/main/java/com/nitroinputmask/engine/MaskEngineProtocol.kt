@@ -1,4 +1,4 @@
-package com.nitroinputmask
+package com.nitroinputmask.engine
 
 interface MaskEngineProtocol {
   fun apply(input: String): Pair<String, String>

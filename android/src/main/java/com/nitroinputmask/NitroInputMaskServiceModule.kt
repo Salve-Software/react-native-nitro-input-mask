@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.margelo.nitro.nitroinputmask.HybridNitroInputMaskServiceSpec
 import com.margelo.nitro.nitroinputmask.NitroMaskOptions
+import com.nitroinputmask.engine.MaskEngineFactory
 
 @Keep
 @DoNotStrip

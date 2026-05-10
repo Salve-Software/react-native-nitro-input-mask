@@ -3,6 +3,8 @@ package com.nitroinputmask
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import com.nitroinputmask.engine.CursorEngine
+import com.nitroinputmask.engine.MaskEngineProtocol
 import java.lang.ref.WeakReference
 
 // Weak reference avoids EditText → TextWatcher → EditText retain cycle

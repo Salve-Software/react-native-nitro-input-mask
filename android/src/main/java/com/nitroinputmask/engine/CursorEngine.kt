@@ -1,4 +1,4 @@
-package com.nitroinputmask
+package com.nitroinputmask.engine
 
 object CursorEngine {
   fun offsetAtEnd(masked: String, mask: String): Int {

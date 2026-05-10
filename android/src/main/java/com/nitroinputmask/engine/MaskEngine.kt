@@ -1,4 +1,4 @@
-package com.nitroinputmask
+package com.nitroinputmask.engine
 
 // ---------------------------------------------------------------------------
 // Slot — private internal representation of each compiled mask position

@@ -1,4 +1,8 @@
-package com.nitroinputmask
+package com.nitroinputmask.masks
+
+import com.nitroinputmask.engine.CompiledMask
+import com.nitroinputmask.engine.MaskEngine
+import com.nitroinputmask.engine.MaskEngineProtocol
 
 internal class CustomMaskEngine(mask: String) : MaskEngineProtocol {
   private val compiled: CompiledMask = MaskEngine.compile(mask)

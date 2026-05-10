@@ -1,6 +1,9 @@
-package com.nitroinputmask
+package com.nitroinputmask.masks
 
 import com.margelo.nitro.nitroinputmask.NitroMaskOptions
+import com.nitroinputmask.engine.CompiledMask
+import com.nitroinputmask.engine.MaskEngine
+import com.nitroinputmask.engine.MaskEngineProtocol
 
 internal class CreditCardMaskEngine(options: NitroMaskOptions) : MaskEngineProtocol {
   private val compiled: CompiledMask

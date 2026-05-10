@@ -10,6 +10,8 @@ import androidx.annotation.Keep
 import com.facebook.proguard.annotations.DoNotStrip
 import com.margelo.nitro.nitroinputmask.HybridNitroInputMaskSpec
 import com.margelo.nitro.nitroinputmask.NitroMaskOptions
+import com.nitroinputmask.engine.MaskEngineFactory
+import com.nitroinputmask.engine.MaskEngineProtocol
 import java.lang.ref.WeakReference
 
 private const val ATTACH_RETRIES = 5

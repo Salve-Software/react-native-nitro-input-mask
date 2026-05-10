@@ -1,6 +1,7 @@
-package com.nitroinputmask
+package com.nitroinputmask.masks
 
 import com.margelo.nitro.nitroinputmask.NitroMaskOptions
+import com.nitroinputmask.engine.MaskEngineProtocol
 
 internal class MoneyMaskEngine(options: NitroMaskOptions) : MaskEngineProtocol {
   private val precision: Int = (options.precision?.toInt()) ?: 2
