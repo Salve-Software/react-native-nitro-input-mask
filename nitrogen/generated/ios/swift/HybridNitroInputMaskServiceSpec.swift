@@ -13,7 +13,7 @@ public protocol HybridNitroInputMaskServiceSpec_protocol: HybridObject {
   
 
   // Methods
-  func applyMask(value: String, mask: String) throws -> String
+  func applyMask(value: String, maskType: String, options: NitroMaskOptions) throws -> String
 }
 
 public extension HybridNitroInputMaskServiceSpec_protocol {

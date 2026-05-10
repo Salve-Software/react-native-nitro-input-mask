@@ -13,9 +13,11 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `NitroMaskOptions` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
 #include <string>
+#include "NitroMaskOptions.hpp"
 
 namespace margelo::nitro::nitroinputmask {
 
@@ -48,7 +50,7 @@ namespace margelo::nitro::nitroinputmask {
 
     public:
       // Methods
-      virtual std::string applyMask(const std::string& value, const std::string& mask) = 0;
+      virtual std::string applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) = 0;
 
     protected:
       // Hybrid Setup

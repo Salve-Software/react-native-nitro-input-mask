@@ -30,7 +30,7 @@ abstract class HybridNitroInputMaskSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun attach(nativeID: String, mask: String): Unit
+  abstract fun attach(nativeID: String, maskType: String, options: NitroMaskOptions): Unit
   
   @DoNotStrip
   @Keep
@@ -38,7 +38,7 @@ abstract class HybridNitroInputMaskSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun updateMask(nativeID: String, mask: String): Unit
+  abstract fun updateMask(nativeID: String, maskType: String, options: NitroMaskOptions): Unit
   
   @DoNotStrip
   @Keep

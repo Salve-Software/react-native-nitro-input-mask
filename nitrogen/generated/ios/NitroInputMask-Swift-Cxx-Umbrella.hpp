@@ -12,13 +12,17 @@
 namespace margelo::nitro::nitroinputmask { class HybridNitroInputMaskServiceSpec; }
 // Forward declaration of `HybridNitroInputMaskSpec` to properly resolve imports.
 namespace margelo::nitro::nitroinputmask { class HybridNitroInputMaskSpec; }
+// Forward declaration of `NitroMaskOptions` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
 // Include C++ defined types
 #include "HybridNitroInputMaskServiceSpec.hpp"
 #include "HybridNitroInputMaskSpec.hpp"
+#include "NitroMaskOptions.hpp"
 #include <NitroModules/Result.hpp>
 #include <exception>
 #include <memory>
+#include <optional>
 #include <string>
 
 // C++ helpers for Swift

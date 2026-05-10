@@ -54,9 +54,9 @@ namespace margelo::nitro::nitroinputmask {
 
   public:
     // Methods
-    void attach(const std::string& nativeID, const std::string& mask) override;
+    void attach(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) override;
     void detach(const std::string& nativeID) override;
-    void updateMask(const std::string& nativeID, const std::string& mask) override;
+    void updateMask(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) override;
     void setValue(const std::string& nativeID, const std::string& rawValue) override;
 
   private:

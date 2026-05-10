@@ -125,9 +125,9 @@ open class HybridNitroInputMaskServiceSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func applyMask(value: std.string, mask: std.string) -> bridge.Result_std__string_ {
+  public final func applyMask(value: std.string, maskType: std.string, options: NitroMaskOptions) -> bridge.Result_std__string_ {
     do {
-      let __result = try self.__implementation.applyMask(value: String(value), mask: String(mask))
+      let __result = try self.__implementation.applyMask(value: String(value), maskType: String(maskType), options: options)
       let __resultCpp = std.string(__result)
       return bridge.create_Result_std__string_(__resultCpp)
     } catch (let __error) {

@@ -7,9 +7,13 @@
 
 #include "JHybridNitroInputMaskServiceSpec.hpp"
 
-
+// Forward declaration of `NitroMaskOptions` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
 #include <string>
+#include "NitroMaskOptions.hpp"
+#include "JNitroMaskOptions.hpp"
+#include <optional>
 
 namespace margelo::nitro::nitroinputmask {
 
@@ -44,9 +48,9 @@ namespace margelo::nitro::nitroinputmask {
   
 
   // Methods
-  std::string JHybridNitroInputMaskServiceSpec::applyMask(const std::string& value, const std::string& mask) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>(jni::alias_ref<jni::JString> /* value */, jni::alias_ref<jni::JString> /* mask */)>("applyMask");
-    auto __result = method(_javaPart, jni::make_jstring(value), jni::make_jstring(mask));
+  std::string JHybridNitroInputMaskServiceSpec::applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<jni::local_ref<jni::JString>(jni::alias_ref<jni::JString> /* value */, jni::alias_ref<jni::JString> /* maskType */, jni::alias_ref<JNitroMaskOptions> /* options */)>("applyMask");
+    auto __result = method(_javaPart, jni::make_jstring(value), jni::make_jstring(maskType), JNitroMaskOptions::fromCpp(options));
     return __result->toStdString();
   }
 
