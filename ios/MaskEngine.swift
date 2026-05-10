@@ -151,6 +151,12 @@ enum MaskEngine {
       }
     }
 
+    // Append any trailing literal slots that remain after input is exhausted.
+    while si < slots.count, case .literal(let lc) = slots[si] {
+      masked.append(lc)
+      si += 1
+    }
+
     return (masked, raw)
   }
 

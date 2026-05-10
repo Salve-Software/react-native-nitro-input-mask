@@ -185,6 +185,17 @@ object MaskEngine {
       }
     }
 
+    // Append any trailing literal slots that remain after input is exhausted.
+    while (si < slots.size) {
+      val slot = slots[si]
+      if (slot is Slot.Literal) {
+        masked.append(slot.char)
+        si++
+      } else {
+        break
+      }
+    }
+
     return Pair(masked.toString(), raw.toString())
   }
 
