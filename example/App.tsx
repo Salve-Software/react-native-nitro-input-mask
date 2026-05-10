@@ -3,22 +3,22 @@ import { View, Text, StyleSheet } from 'react-native';
 import { NitroInputMask, NitroInputMaskService } from 'react-native-nitro-input-mask';
 
 function App(): React.JSX.Element {
-  const [cpf, setCpf] = useState<string>('');
+  const [ssn, setSsn] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [money, setMoney] = useState<string>('');
 
-  function applyCPFMask() {
+  function applySSNMask() {
     return NitroInputMaskService.applyMask({
-      value: '02145622051',
-      maskOptions: { mask: '999.999.999-99' },
+      value: '123456789',
+      maskOptions: { mask: '999-99-9999' },
     });
   }
 
   function applyPhoneMask() {
     return NitroInputMaskService.applyMask({
-      value: '90834513624',
-      maskOptions: { mask: '(99) 99999-9999' },
+      value: '5551234567',
+      maskOptions: { mask: '(999) 999-9999' },
     });
   }
 
@@ -43,18 +43,18 @@ function App(): React.JSX.Element {
       <View>
         <Text style={styles.label}>TextInput</Text>
 
-        <Text style={styles.inputLabel}>CPF</Text>
+        <Text style={styles.inputLabel}>SSN</Text>
         <NitroInputMask
-          maskOptions={{ mask: '999.999.999-99' }}
-          value={cpf}
-          onChangeText={setCpf}
+          maskOptions={{ mask: '999-99-9999' }}
+          value={ssn}
+          onChangeText={setSsn}
           style={styles.input}
-          testID="nitro-input-mask-cpf"
+          testID="nitro-input-mask-ssn"
         />
 
         <Text style={styles.inputLabel}>Phone</Text>
         <NitroInputMask
-          maskOptions={{ mask: '(99) 99999-9999' }}
+          maskOptions={{ mask: '(999) 999-9999' }}
           value={phone}
           onChangeText={setPhone}
           style={styles.input}
@@ -85,7 +85,7 @@ function App(): React.JSX.Element {
       <View>
         <Text style={styles.label}>Service</Text>
 
-        <Text style={styles.inputLabel}>CPF: {applyCPFMask()}</Text>
+        <Text style={styles.inputLabel}>SSN: {applySSNMask()}</Text>
         <Text style={styles.inputLabel}>Phone: {applyPhoneMask()}</Text>
         <Text style={styles.inputLabel}>Date: {applyDateMask()}</Text>
         <Text style={styles.inputLabel}>Money: {applyMoneyMask()}</Text>
