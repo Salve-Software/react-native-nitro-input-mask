@@ -13,11 +13,13 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
   private var isDeletion = false
   private var changeStart = 0
   private var prevMasked = ""
+  private var prevCursorEnd = 0
 
   override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
     prevLength = s?.length ?: 0
     isDeletion = after < count
     prevMasked = s?.toString() ?: ""
+    prevCursorEnd = start + count
   }
 
   override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -40,12 +42,16 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
     }
 
     val cursorPos = when {
-      engine.wantsTrailingCursor -> masked.length
+      engine.wantsTrailingCursor -> {
+        val digitsAfter = countDigits(prevMasked, prevCursorEnd)
+        cursorPositionWithDigitsAfter(digitsAfter, masked)
+      }
       isDeletion -> minOf(changeStart, masked.length)
       else -> {
         val expMask = engine.expandedMask
         if (expMask != null) {
-          CursorEngine.offsetAfterInsertion(prevMasked, masked, expMask, changeStart)
+          val raw = CursorEngine.offsetAfterInsertion(prevMasked, masked, expMask, changeStart)
+          skipLeadingLiterals(raw, masked, expMask)
         } else {
           masked.length
         }
@@ -60,5 +66,31 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
       isProgrammatic = false
       editText.setSelection(minOf(cursorPos, editText.text.length))
     }
+  }
+
+  private fun skipLeadingLiterals(offset: Int, masked: String, mask: String): Int {
+    val dataTokens = setOf('9', 'A', '*')
+    var idx = offset
+    while (idx < mask.length && mask[idx] !in dataTokens) idx++
+    return minOf(idx, masked.length)
+  }
+
+  private fun countDigits(text: String, from: Int): Int {
+    if (from >= text.length) return 0
+    return text.substring(from).count { it.isDigit() }
+  }
+
+  private fun cursorPositionWithDigitsAfter(count: Int, text: String): Int {
+    if (count == 0) return text.length
+    var digitsFromEnd = 0
+    var pos = text.length
+    while (pos > 0) {
+      pos--
+      if (text[pos].isDigit()) {
+        digitsFromEnd++
+        if (digitsFromEnd == count) return pos
+      }
+    }
+    return 0
   }
 }

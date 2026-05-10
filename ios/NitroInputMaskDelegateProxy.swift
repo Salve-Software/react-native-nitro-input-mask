@@ -42,9 +42,10 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
     textField.text = masked
 
     if engine.wantsTrailingCursor {
-      // Money and similar: always place cursor at end of field
-      let endPos = masked.count
-      if let pos = textField.position(from: textField.beginningOfDocument, offset: endPos) {
+      // Money: use "digits from end" so cursor survives mid-string edits.
+      let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
+      let newCursorPos = cursorPositionWithDigitsAfter(digitsAfterCursor, in: masked)
+      if let pos = textField.position(from: textField.beginningOfDocument, offset: newCursorPos) {
         textField.selectedTextRange = textField.textRange(from: pos, to: pos)
       }
     } else if let expandedMask = engine.expandedMask {
@@ -52,18 +53,19 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
       if isDeletion {
         cursorOffset = min(range.location, masked.count)
       } else {
-        cursorOffset = CursorEngine.offsetAfterInsertion(
+        let raw = CursorEngine.offsetAfterInsertion(
           oldMasked: current,
           newMasked: masked,
           mask: expandedMask,
           at: range.location
         )
+        // Advance past any auto-inserted literals immediately following the cursor.
+        cursorOffset = skipLeadingLiterals(at: raw, in: masked, mask: expandedMask)
       }
       if let pos = textField.position(from: textField.beginningOfDocument, offset: cursorOffset) {
         textField.selectedTextRange = textField.textRange(from: pos, to: pos)
       }
     } else {
-      // Fallback: put cursor at end
       let endPos = masked.count
       if let pos = textField.position(from: textField.beginningOfDocument, offset: endPos) {
         textField.selectedTextRange = textField.textRange(from: pos, to: pos)
@@ -86,5 +88,48 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
   override func forwardingTarget(for aSelector: Selector!) -> Any? {
     if original?.responds(to: aSelector) == true { return original }
     return super.forwardingTarget(for: aSelector)
+  }
+
+  // MARK: - Cursor helpers
+
+  /// Advances `offset` past any consecutive literal slots in `mask`, so the
+  /// cursor lands after auto-inserted separators rather than before them.
+  private func skipLeadingLiterals(at offset: Int, in masked: String, mask: String) -> Int {
+    let dataTokens: Set<Character> = ["9", "A", "*"]
+    let maskChars = Array(mask)
+    var idx = offset
+    while idx < maskChars.count && !dataTokens.contains(maskChars[idx]) {
+      idx += 1
+    }
+    return min(idx, masked.count)
+  }
+
+  /// Returns how many digit characters exist in `text` starting from `start`.
+  private func countDigits(in text: String, from start: Int) -> Int {
+    guard start < text.count else { return 0 }
+    let chars = Array(text)
+    var count = 0
+    for i in start..<chars.count where chars[i].isNumber {
+      count += 1
+    }
+    return count
+  }
+
+  /// Returns the cursor position in `text` such that exactly `count` digit
+  /// characters appear after it. Used for RTL money masks so the cursor
+  /// stays near the edit point after reformatting.
+  private func cursorPositionWithDigitsAfter(_ count: Int, in text: String) -> Int {
+    if count == 0 { return text.count }
+    let chars = Array(text)
+    var digitsFromEnd = 0
+    var pos = chars.count
+    while pos > 0 {
+      pos -= 1
+      if chars[pos].isNumber {
+        digitsFromEnd += 1
+        if digitsFromEnd == count { return pos }
+      }
+    }
+    return 0
   }
 }
