@@ -60,13 +60,13 @@ Drop-in replacement for `<TextInput />`. Accepts all standard `TextInputProps` p
 import React, { useState } from 'react'
 import { NitroInputMask } from 'react-native-nitro-input-mask'
 
-function CPFInput() {
+function PhoneInput() {
   const [value, setValue] = useState('')
 
   return (
     <NitroInputMask
-      maskOptions={{ mask: '999.999.999-99' }}
-      placeholder="000.000.000-00"
+      maskOptions={{ mask: '(999) 999-9999' }}
+      placeholder="(555) 000-0000"
       keyboardType="numeric"
       onChangeText={setValue}
     />
@@ -78,7 +78,7 @@ function CPFInput() {
 // Money
 <NitroInputMask
   maskType="money"
-  maskOptions={{ unit: 'R$ ', precision: 2 }}
+  maskOptions={{ unit: '$ ', precision: 2 }}
   keyboardType="numeric"
   onChangeText={setValue}
 />
@@ -86,7 +86,7 @@ function CPFInput() {
 // Date
 <NitroInputMask
   maskType="datetime"
-  maskOptions={{ format: 'DD/MM/YYYY' }}
+  maskOptions={{ format: 'MM/DD/YYYY' }}
   keyboardType="numeric"
   onChangeText={setValue}
 />
@@ -108,24 +108,24 @@ Apply a mask to any string — useful for formatting values in lists, previews, 
 import { NitroInputMaskService } from 'react-native-nitro-input-mask'
 
 NitroInputMaskService.applyMask({
-  value: '12345678901',
-  maskOptions: { mask: '999.999.999-99' },
+  value: '5551234567',
+  maskOptions: { mask: '(999) 999-9999' },
 })
-// '123.456.789-01'
+// '(555) 123-4567'
 
 NitroInputMaskService.applyMask({
   value: '123456',
   maskType: 'money',
-  maskOptions: { unit: 'R$ ', precision: 2 },
+  maskOptions: { unit: '$ ', precision: 2 },
 })
-// 'R$ 1.234,56'
+// '$ 1,234.56'
 
 NitroInputMaskService.applyMask({
-  value: '11222025',
+  value: '06252025',
   maskType: 'datetime',
-  maskOptions: { format: 'DD/MM/YYYY' },
+  maskOptions: { format: 'MM/DD/YYYY' },
 })
-// '11/22/2025'
+// '06/25/2025'
 ```
 
 ## Mask Syntax
@@ -153,11 +153,11 @@ Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput
 
 ### `NitroInputMaskService.applyMask(props)`
 
-Accepts the same `maskType` + `maskOptions` as the component, plus:
-
 | Prop | Type | Description |
 |---|---|---|
 | `value` | `string` | The raw string to mask |
+| `maskType` | `'custom' \| 'money' \| 'datetime' \| 'credit-card'` | Mask type (default `'custom'`) |
+| `maskOptions` | See table above | Options for the chosen mask type |
 
 Returns the masked `string`.
 
