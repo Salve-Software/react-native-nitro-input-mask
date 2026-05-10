@@ -53,11 +53,18 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
         // Separator deleted: move to just before it so next backspace hits a real digit.
         cursorPos = range.location
       } else if isDeletion {
-        // Count digits before the deleted range in the old text, then land after
-        // the same number of digits in the new text. This survives separator
-        // additions/removals (e.g. thousands dot disappearing after a deletion).
-        let digitsBeforeRange = countDigitsUpTo(in: current, upTo: range.location)
-        cursorPos = positionAfterDigits(digitsBeforeRange, in: masked)
+        // If the cursor was at the trailing edge (no digits after the deleted
+        // char), stay at the end of the new string — RTL money digits shift left
+        // and the "digits before" anchor would land one position short.
+        // Otherwise use the digits-before anchor so the cursor survives a
+        // thousands separator being removed (e.g. 1.123,55 → 112,55).
+        let digitsAfterDeleted = countDigits(in: current, from: range.location + range.length)
+        if digitsAfterDeleted == 0 {
+          cursorPos = masked.count
+        } else {
+          let digitsBeforeRange = countDigitsUpTo(in: current, upTo: range.location)
+          cursorPos = positionAfterDigits(digitsBeforeRange, in: masked)
+        }
       } else {
         // Insertion: use "digits from end" so cursor survives magnitude changes.
         let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
