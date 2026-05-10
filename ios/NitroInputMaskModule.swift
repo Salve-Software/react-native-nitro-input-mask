@@ -7,21 +7,21 @@ private let attachRetryDelay: TimeInterval = 0.05
 class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInputMaskSpec_protocol {
   private var proxies: [String: NitroInputMaskDelegateProxy] = [:]
 
-  func attach(nativeID: String, mask: String) throws {
-    let compiled = MaskEngine.compile(mask: mask)
-    attemptAttach(nativeID: nativeID, compiled: compiled, retries: attachRetries)
+  func attach(nativeID: String, maskType: String, options: NitroMaskOptions) throws {
+    let engine = MaskEngineFactory.build(maskType: maskType, options: options)
+    attemptAttach(nativeID: nativeID, engine: engine, retries: attachRetries)
   }
 
-  private func attemptAttach(nativeID: String, compiled: CompiledMask, retries: Int) {
+  private func attemptAttach(nativeID: String, engine: MaskEngineProtocol, retries: Int) {
     DispatchQueue.main.async { [weak self] in
       guard let self else { return }
       if let tf = self.findTextField(nativeID: nativeID) {
-        let proxy = NitroInputMaskDelegateProxy(compiled: compiled, original: tf.delegate)
+        let proxy = NitroInputMaskDelegateProxy(engine: engine, original: tf.delegate)
         tf.delegate = proxy
         self.proxies[nativeID] = proxy
       } else if retries > 0 {
         DispatchQueue.main.asyncAfter(deadline: .now() + attachRetryDelay) { [weak self] in
-          self?.attemptAttach(nativeID: nativeID, compiled: compiled, retries: retries - 1)
+          self?.attemptAttach(nativeID: nativeID, engine: engine, retries: retries - 1)
         }
       }
     }
@@ -37,8 +37,9 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
     }
   }
 
-  func updateMask(nativeID: String, mask: String) throws {
-    proxies[nativeID]?.compiled = MaskEngine.compile(mask: mask)
+  func updateMask(nativeID: String, maskType: String, options: NitroMaskOptions) throws {
+    let engine = MaskEngineFactory.build(maskType: maskType, options: options)
+    proxies[nativeID]?.engine = engine
   }
 
   func setValue(nativeID: String, rawValue: String) throws {
@@ -46,10 +47,17 @@ class HybridNitroInputMaskModule: HybridNitroInputMaskSpec_base, HybridNitroInpu
       guard let self else { return }
       guard let proxy = self.proxies[nativeID] else { return }
       guard let tf = self.findTextField(nativeID: nativeID) else { return }
-      let (masked, _) = MaskEngine.apply(input: rawValue, compiled: proxy.compiled)
+      let (masked, _) = proxy.engine.apply(input: rawValue)
       guard tf.text != masked else { return }
       tf.text = masked
-      CursorEngine.apply(to: tf, masked: masked, mask: proxy.compiled.expandedMask)
+      if proxy.engine.wantsTrailingCursor {
+        let endPos = masked.count
+        if let pos = tf.position(from: tf.beginningOfDocument, offset: endPos) {
+          tf.selectedTextRange = tf.textRange(from: pos, to: pos)
+        }
+      } else if let expandedMask = proxy.engine.expandedMask {
+        CursorEngine.apply(to: tf, masked: masked, mask: expandedMask)
+      }
     }
   }
 
