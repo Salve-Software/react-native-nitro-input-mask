@@ -81,6 +81,7 @@ object MaskEngine {
           i++
           continue
         }
+        
         val content = mask.substring(i + 1, closeIdx) // e.g. "1-12"
         val dashIdx = content.indexOf('-')
         val from = if (dashIdx > 0) content.substring(0, dashIdx).toIntOrNull() else null
@@ -91,13 +92,15 @@ object MaskEngine {
             slots.add(Slot.RangeSlot(content, length, from, to))
             expanded.append('9')
           }
-        } else {
+        } 
+        else {
           // Malformed range — emit the entire "[...]" as individual literals.
           val literal = "[$content]"
           for (c in literal) { slots.add(Slot.Literal(c)); expanded.append(c) }
         }
         i = closeIdx + 1
-      } else {
+      } 
+      else {
         when (val ch = mask[i]) {
           '9' -> { slots.add(Slot.Digit);  expanded.append('9') }
           'A' -> { slots.add(Slot.Letter); expanded.append('A') }
@@ -136,7 +139,8 @@ object MaskEngine {
         is Slot.Digit -> {
           if (c.isDigit()) {
             masked.append(c); raw.append(c); ii++; si++
-          } else {
+          } 
+          else {
             ii++
           }
         }
@@ -144,7 +148,8 @@ object MaskEngine {
         is Slot.Letter -> {
           if (c.isLetter()) {
             masked.append(c); raw.append(c); ii++; si++
-          } else {
+          } 
+          else {
             ii++
           }
         }
@@ -152,7 +157,8 @@ object MaskEngine {
         is Slot.Any -> {
           if (c.isLetterOrDigit()) {
             masked.append(c); raw.append(c); ii++; si++
-          } else {
+          } 
+          else {
             ii++
           }
         }
@@ -167,17 +173,20 @@ object MaskEngine {
           if (c.isDigit()) {
             val partial = blockPartials.getOrPut(slot.blockName) { StringBuilder() }
             val candidate = partial.toString() + c
+
             if (isValidPrefix(candidate, slot.from, slot.to, slot.length)) {
               partial.append(c)
               masked.append(c)
               raw.append(c)
               ii++
               si++
-            } else {
+            }
+            else {
               // Invalid digit for this range position — skip the input char
               ii++
             }
-          } else {
+          }
+          else {
             // Non-digit where a range digit is expected — skip
             ii++
           }
@@ -188,10 +197,12 @@ object MaskEngine {
     // Append any trailing literal slots that remain after input is exhausted.
     while (si < slots.size) {
       val slot = slots[si]
+      
       if (slot is Slot.Literal) {
         masked.append(slot.char)
         si++
-      } else {
+      } 
+      else {
         break
       }
     }
@@ -220,7 +231,8 @@ object MaskEngine {
         raw.append(textChars[ti])
         ti++
         mi++
-      } else {
+      } 
+      else {
         if (textChars[ti] == m) ti++
         mi++
       }
