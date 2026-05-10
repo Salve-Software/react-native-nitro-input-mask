@@ -35,16 +35,26 @@ internal class NitroInputMaskTextWatcher(var engine: MaskEngineProtocol, editTex
 
     // Separator deletion: masking re-produces the same text because the separator
     // is always re-inserted. If there is data, block the deletion (text unchanged,
-    // cursor stays at the separator). If there is no data, clear the field.
+    // cursor moves to just before the separator). If there is no data, clear the field.
+    var isSeparatorDeletion = false
     if (isDeletion && masked == prevMasked) {
       val (_, raw) = engine.apply(input)
-      masked = if (raw.isEmpty()) "" else prevMasked
+      if (raw.isEmpty()) {
+        masked = ""
+      } else {
+        isSeparatorDeletion = true
+        // masked stays == prevMasked; cursor will move to changeStart below
+      }
     }
 
     val cursorPos = when {
       engine.wantsTrailingCursor -> {
-        val digitsAfter = countDigits(prevMasked, prevCursorEnd)
-        cursorPositionWithDigitsAfter(digitsAfter, masked)
+        if (isSeparatorDeletion) {
+          changeStart  // move cursor to just before the separator
+        } else {
+          val digitsAfter = countDigits(prevMasked, prevCursorEnd)
+          cursorPositionWithDigitsAfter(digitsAfter, masked)
+        }
       }
       isDeletion -> minOf(changeStart, masked.length)
       else -> {

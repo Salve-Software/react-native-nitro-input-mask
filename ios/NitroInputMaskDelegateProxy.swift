@@ -33,20 +33,34 @@ class NitroInputMaskDelegateProxy: NSObject, UITextFieldDelegate {
 
     // Separator deletion: masking re-produces the same text because the separator
     // is always re-inserted. If there is data, block the deletion (text unchanged,
-    // cursor stays at the separator). If there is no data, clear the field.
+    // cursor moves to just before the separator). If there is no data, clear the field.
+    var isSeparatorDeletion = false
     if isDeletion && masked == current {
       let (_, extractedRaw) = engine.apply(input: current)
-      masked = extractedRaw.isEmpty ? "" : current
+      if extractedRaw.isEmpty {
+        masked = ""
+      } else {
+        isSeparatorDeletion = true
+        // masked stays == current; cursor will move to range.location below
+      }
     }
 
     textField.text = masked
 
     if engine.wantsTrailingCursor {
-      // Money: use "digits from end" so cursor survives mid-string edits.
-      let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
-      let newCursorPos = cursorPositionWithDigitsAfter(digitsAfterCursor, in: masked)
-      if let pos = textField.position(from: textField.beginningOfDocument, offset: newCursorPos) {
-        textField.selectedTextRange = textField.textRange(from: pos, to: pos)
+      if isSeparatorDeletion {
+        // Move cursor to just before the separator so the next backspace deletes a real digit.
+        let cursorPos = range.location
+        if let pos = textField.position(from: textField.beginningOfDocument, offset: cursorPos) {
+          textField.selectedTextRange = textField.textRange(from: pos, to: pos)
+        }
+      } else {
+        // Money: use "digits from end" so cursor survives mid-string edits.
+        let digitsAfterCursor = countDigits(in: current, from: range.location + range.length)
+        let newCursorPos = cursorPositionWithDigitsAfter(digitsAfterCursor, in: masked)
+        if let pos = textField.position(from: textField.beginningOfDocument, offset: newCursorPos) {
+          textField.selectedTextRange = textField.textRange(from: pos, to: pos)
+        }
       }
     } else if let expandedMask = engine.expandedMask {
       let cursorOffset: Int
