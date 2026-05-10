@@ -6,25 +6,35 @@ function App(): React.JSX.Element {
   const [cpf, setCpf] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [date, setDate] = useState<string>('');
+  const [money, setMoney] = useState<string>('');
 
   function applyCPFMask() {
     return NitroInputMaskService.applyMask({
       value: '02145622051',
-      mask: '(999.999.999-99)',
+      maskOptions: { mask: '999.999.999-99' },
     });
   }
 
   function applyPhoneMask() {
     return NitroInputMaskService.applyMask({
       value: '90834513624',
-      mask: '(99) 99999-9999',
+      maskOptions: { mask: '(99) 99999-9999' },
     });
   }
 
   function applyDateMask() {
     return NitroInputMaskService.applyMask({
-      value: '11-22-2025',
-      mask: '[1-12]/[1-31]/9999',
+      value: '11222025',
+      maskType: 'datetime',
+      maskOptions: { format: 'MM/DD/YYYY' },
+    });
+  }
+
+  function applyMoneyMask() {
+    return NitroInputMaskService.applyMask({
+      value: '123456',
+      maskType: 'money',
+      maskOptions: { unit: 'R$ ', precision: 2 },
     });
   }
 
@@ -35,7 +45,7 @@ function App(): React.JSX.Element {
 
         <Text style={styles.inputLabel}>CPF</Text>
         <NitroInputMask
-          mask="999.999.999-99"
+          maskOptions={{ mask: '999.999.999-99' }}
           value={cpf}
           onChangeText={setCpf}
           style={styles.input}
@@ -44,7 +54,7 @@ function App(): React.JSX.Element {
 
         <Text style={styles.inputLabel}>Phone</Text>
         <NitroInputMask
-          mask="(99) 99999-9999"
+          maskOptions={{ mask: '(99) 99999-9999' }}
           value={phone}
           onChangeText={setPhone}
           style={styles.input}
@@ -53,11 +63,22 @@ function App(): React.JSX.Element {
 
         <Text style={styles.inputLabel}>Date</Text>
         <NitroInputMask
-          mask="[1-12]/[1-31]/9999"
+          maskType="datetime"
+          maskOptions={{ format: 'DD/MM/YYYY' }}
           value={date}
           onChangeText={setDate}
           style={styles.input}
           testID="nitro-input-mask-date"
+        />
+
+        <Text style={styles.inputLabel}>Money</Text>
+        <NitroInputMask
+          maskType="money"
+          maskOptions={{ unit: 'R$ ', precision: 2 }}
+          value={money}
+          onChangeText={setMoney}
+          style={styles.input}
+          testID="nitro-input-mask-money"
         />
       </View>
 
@@ -67,6 +88,7 @@ function App(): React.JSX.Element {
         <Text style={styles.inputLabel}>CPF: {applyCPFMask()}</Text>
         <Text style={styles.inputLabel}>Phone: {applyPhoneMask()}</Text>
         <Text style={styles.inputLabel}>Date: {applyDateMask()}</Text>
+        <Text style={styles.inputLabel}>Money: {applyMoneyMask()}</Text>
       </View>
     </View>
   );
@@ -106,13 +128,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: 12,
     color: '#ccc',
-  },
-
-  hint: {
-    fontSize: 12,
-    color: '#666',
-    alignSelf: 'flex-start',
-    marginTop: 4,
   },
 });
 
