@@ -22,6 +22,16 @@
         "language": "kotlin",
         "implementationClassName": "HybridNitroInputMaskModule"
       }
+    },
+    "NitroInputMaskService": {
+      "ios": {
+        "language": "swift",
+        "implementationClassName": "HybridNitroInputMaskServiceModule"
+      },
+      "android": {
+        "language": "kotlin",
+        "implementationClassName": "HybridNitroInputMaskServiceModule"
+      }
     }
   },
   "ignorePaths": [
