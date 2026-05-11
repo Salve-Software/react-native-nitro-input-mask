@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
     gap: 16,
+    backgroundColor: 'black',
   },
 
   label: {
