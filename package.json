@@ -1,6 +1,6 @@
 {
   "name": "react-native-nitro-input-mask",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Native text input masks for React Native — zero JS flicker, built with Nitro Modules.",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
