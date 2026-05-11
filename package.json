@@ -1,7 +1,7 @@
 {
   "name": "@salve-software/react-native-nitro-input-mask",
   "version": "1.0.0",
-  "description": "Native text input masks for React Native — zero JS flicker, built with Nitro Modules.",
+  "description": "High-performance native input masks for React Native built with Nitro Modules. Phone, currency, CPF, credit card and custom masks with zero JS flicker.",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -17,7 +17,19 @@
   },
   "keywords": [
     "react-native",
-    "react-native-nitro-input-mask"
+    "react-native-nitro-input-mask",
+    "input-mask",
+    "input",
+    "mask",
+    "text-input",
+    "react-native-mask",
+    "react-native-input-mask",
+    "nitro-modules",
+    "nitro-module",
+    "native-module",
+    "formatter",
+    "currency-mask",
+    "phone-mask"
   ],
   "files": [
     "src",
