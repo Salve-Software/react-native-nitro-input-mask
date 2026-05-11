@@ -44,7 +44,7 @@ function App(): React.JSX.Element {
     return masked;
   }
 
-  function handlePhoneChangeValue({ masked, raw }: MaskResult) {
+  function handlePhoneChangeText({ masked, raw }: MaskResult) {
     setPhone(masked);
     setPhoneRaw(raw);
   }
@@ -67,7 +67,7 @@ function App(): React.JSX.Element {
         <NitroInputMask
           maskOptions={{ mask: '(999) 999-9999' }}
           value={phone}
-          onChangeValue={handlePhoneChangeValue}
+          onChangeText={handlePhoneChangeText}
           style={styles.input}
           testID="nitro-input-mask-phone"
         />

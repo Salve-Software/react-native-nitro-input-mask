@@ -4,7 +4,7 @@ import { TextInput } from 'react-native';
 import { nitroModule, getNitroServiceModule } from '../../nitro-module';
 
 export const NitroInputMask = (props: NitroInputMaskProps) => {
-  const { maskType, maskOptions, onChangeValue, onChangeText, value, ...rest } = props as NitroInputMaskProps & {
+  const { maskType, maskOptions, onChangeText, value, ...rest } = props as NitroInputMaskProps & {
     maskType?: string;
     maskOptions?: Record<string, unknown>;
   };
@@ -31,12 +31,12 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
   }, [value]);
 
   const handleChangeText = useCallback((text: string) => {
-    onChangeText?.(text);
-    if (onChangeValue) {
-      const result = getNitroServiceModule().applyMask(text, resolvedMaskType, maskOptions ?? {});
-      onChangeValue(result);
+    if (onChangeText) {
+      const parsedOptions = JSON.parse(maskOptionsJson) as Record<string, unknown>;
+      const result = getNitroServiceModule().applyMask(text, resolvedMaskType, parsedOptions);
+      onChangeText(result);
     }
-  }, [onChangeText, onChangeValue, resolvedMaskType, maskOptionsJson]);
+  }, [onChangeText, resolvedMaskType, maskOptionsJson]);
 
   return (
     <TextInput

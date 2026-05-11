@@ -61,6 +61,10 @@ export class NitroInputMaskService {
     const resolvedMaskType = maskType ?? 'custom';
     const resolvedOptions = maskOptions ?? {};
 
+    if (resolvedValue.length > 1000) {
+      throw new Error('NitroInputMaskService: value exceeds maximum allowed length');
+    }
+
     if (resolvedMaskType === 'custom') {
       const mask = String((resolvedOptions as { mask?: string }).mask ?? '');
       if (!mask) return { masked: resolvedValue, raw: resolvedValue };

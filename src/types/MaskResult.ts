@@ -1,6 +1,6 @@
 /**
  * The result returned by `NitroInputMaskService.applyMask()` and
- * delivered to `<NitroInputMask onChangeValue />`.
+ * delivered to `<NitroInputMask onChangeText />`.
  *
  * - `masked` — the formatted string as displayed to the user (e.g. `"(555) 123-4567"`)
  * - `raw`    — the unformatted input stripped of mask literals.
