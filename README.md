@@ -64,26 +64,6 @@ Drop-in replacement for `<TextInput />`. Accepts all standard `TextInputProps` p
 
 ```tsx
 import React, { useState } from 'react'
-import { NitroInputMask } from 'react-native-nitro-input-mask'
-
-function PhoneInput() {
-  const [value, setValue] = useState('')
-
-  return (
-    <NitroInputMask
-      maskOptions={{ mask: '(999) 999-9999' }}
-      placeholder="(555) 000-0000"
-      keyboardType="numeric"
-      onChangeText={setValue}
-    />
-  )
-}
-```
-
-Use `onChangeValue` to receive both the masked display value and the raw unformatted digits in one callback:
-
-```tsx
-import React, { useState } from 'react'
 import type { MaskResult } from 'react-native-nitro-input-mask'
 import { NitroInputMask } from 'react-native-nitro-input-mask'
 
@@ -91,7 +71,7 @@ function PhoneInput() {
   const [display, setDisplay] = useState('')
   const [digits, setDigits] = useState('')
 
-  function handleChangeValue({ masked, raw }: MaskResult) {
+  function handleChange({ masked, raw }: MaskResult) {
     setDisplay(masked) // '(555) 123-4567'
     setDigits(raw)     // '5551234567'
   }
@@ -102,7 +82,7 @@ function PhoneInput() {
       placeholder="(555) 000-0000"
       keyboardType="numeric"
       value={display}
-      onChangeValue={handleChangeValue}
+      onChangeText={handleChange}
     />
   )
 }
@@ -114,7 +94,7 @@ function PhoneInput() {
   maskType="money"
   maskOptions={{ unit: '$ ', precision: 2 }}
   keyboardType="numeric"
-  onChangeText={setValue}
+  onChangeText={({ masked, raw }) => { /* ... */ }}
 />
 
 // Date
@@ -122,7 +102,7 @@ function PhoneInput() {
   maskType="datetime"
   maskOptions={{ format: 'MM/DD/YYYY' }}
   keyboardType="numeric"
-  onChangeText={setValue}
+  onChangeText={({ masked, raw }) => { /* ... */ }}
 />
 
 // Credit card
@@ -130,7 +110,7 @@ function PhoneInput() {
   maskType="credit-card"
   maskOptions={{ issuer: 'visa-or-mastercard' }}
   keyboardType="numeric"
-  onChangeText={setValue}
+  onChangeText={({ masked, raw }) => { /* ... */ }}
 />
 ```
 
@@ -183,7 +163,7 @@ Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput
 |---|---|---|
 | `maskType` | `'custom' \| 'money' \| 'datetime' \| 'credit-card'` | Mask type (default `'custom'`) |
 | `maskOptions` | See table below | Options for the chosen mask type |
-| `onChangeValue` | `(result: MaskResult) => void` | Fires on every edit with `{ masked, raw }` |
+| `onChangeText` | `(result: MaskResult) => void` | Fires on every edit with `{ masked, raw }`. Overrides React Native's default `(text: string) => void`. |
 
 | maskType | maskOptions | Docs |
 |---|---|---|
