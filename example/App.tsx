@@ -1,7 +1,7 @@
+import type { MaskResult } from '@salve-software/react-native-nitro-input-mask';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import type { MaskResult } from 'react-native-nitro-input-mask';
-import { NitroInputMask, NitroInputMaskService } from 'react-native-nitro-input-mask';
+import { NitroInputMask, NitroInputMaskService } from '@salve-software/react-native-nitro-input-mask';
 
 function App(): React.JSX.Element {
   const [ssn, setSsn] = useState<string>('');
