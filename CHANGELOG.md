@@ -1,88 +1,11 @@
 ## 1.0.0 (2026-05-11)
 
-### ✨ Features
+### ✨Initial release
 
-* **android:** add mask engine strategy layer ([2ac458c](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/2ac458cd84187f957aec631b5cefb37074bfa4ec))
-* **android:** implement HybridNitroInputMaskServiceModule ([0ee6e6b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/0ee6e6b900a4c2223e117455eaaf8beb166eaf55))
-* **android:** native EditText mask engine ([cd80796](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/cd80796beabfe217bbd21ae889b4bfca5d1f8bf9))
-* **android:** wire modules to engine factory ([d5198c5](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/d5198c5663b2c44e04dbc696b75ac2c70ff6dbac))
-* **example:** demo NitroInputMaskService alongside component ([2b8659b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/2b8659b24c8272cb3053f8ac910f57df65372ce0))
-* **example:** three masked input demos ([e3ae3cf](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/e3ae3cf8457fe0041353fdb322b439b7214d4f46))
-* **example:** update to new maskType API ([adcdb31](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/adcdb31df92d3d1b9313a580227276ec623f4dbb))
-* implement native text masking via delegate proxy ([816f735](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/816f735ef79679e558379cfb97b1de9643ede440))
-* **ios:** add mask engine strategy layer ([2d52249](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/2d52249f5477a50b3549450fe970a6e8f8ccd925))
-* **ios:** implement HybridNitroInputMaskServiceModule ([0123e4e](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/0123e4ed0d6cae18d1cf12abed92d315d246dae9))
-* **ios:** native UITextField mask engine ([d2b7f6b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/d2b7f6b2f977f75e5e260b6e71be617ad54ee4c2))
-* **ios:** wire modules to engine factory ([f5c2d71](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f5c2d71b81c80e0a45fcaa178f80ea0ff58e5a1d))
-* **js:** export NitroMaskProps public type ([7d3287d](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/7d3287de413e6b1e35283c4727049cadd8c453c3))
-* **mask:** inline range syntax [from-to] in mask string ([f7a4994](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f7a4994a59a1169e6f9e2ebd6f17734e3e930176))
-* **service:** complete NitroInputMaskService class structure ([7099200](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/709920070d8ddf02a49837c616c8a9aaff02e76f))
-* **spec:** add NitroInputMaskService nitro spec ([4f4d2f1](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/4f4d2f16fe7bf3f039dea32ad6f176a0a2616d10))
-* **spec:** replace isRed with mask props ([147d38b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/147d38be12e829282d648f981af85c9208d997f2))
-* **specs:** add NitroMaskOptions and maskType ([9a11ac9](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/9a11ac9ac23fdc41996fcf9c22cbb7ea9a9c8664))
-* **ts:** discriminated-union maskType API ([7163404](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/71634040c42b0a15326ef4406f92a0428b4dc118))
-* wire NitroInputMaskService JS class ([36dbb42](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/36dbb42dc80d56d9790eb921f0841d50015cc95a))
+High-performance native input masks for React Native, built on [Nitro Modules](https://github.com/mrousavy/nitro).
 
-### 🐛 Bug Fixes
-
-* **android:** extractRaw, cursor, literal backspace ([42bb037](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/42bb037b599d05a293de6fe1ecb9481176f206d1))
-* **android:** make CompiledMask and MaskEngine methods internal ([0b6c1fa](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/0b6c1fa00ef6ab86f6d9948f28b50c760d2beedf))
-* **android:** make NitroInputMaskTextWatcher internal ([35dbb19](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/35dbb190de652fdada5f682ed130f93621600c62))
-* **android:** make Slot internal to fix visibility error ([39d8792](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/39d879272a1aaae20ab63c1633d785389f8b3443))
-* **android:** set reactContext in createViewManagers ([8967136](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/8967136953ef2bab44a7754397a2cff95fcba461))
-* **codegen:** correct Java package path in generated OnLoad ([2c532cb](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/2c532cbd601de12539a9abedecb6a07fa55901f9))
-* **codegen:** revert spec rename to fix doubled suffix ([4db24af](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/4db24af130843aaf89ae137b4d99a357eb2e54fa))
-* **cursor:** correct cursor placement for mid-string edits ([23d5098](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/23d5098b8d381bcff5fe6fc3ce7bb1b88658ed9b))
-* **cursor:** keep position on real digit deletion in money mask ([2619fcf](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/2619fcff49868233c8ea4e5a986c184efb093913))
-* **cursor:** land before first digit when no digits precede deletion ([1d3dc21](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/1d3dc21bd3daeaa708aa56e1872f0874380d25d4))
-* **cursor:** move cursor before separator on deletion instead of staying ([9c93464](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/9c934649c173f4a00fd3cf8698d6b2ed439befa2))
-* **cursor:** snap to end when no digits follow deletion in money mask ([06ea749](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/06ea74992bff27ffd89e3b28a8a517376befa697))
-* **cursor:** trailing literal skip and money mid-edit positioning ([b60b351](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/b60b3510657bba8371eb2d9d3bb6d3a20cef724f))
-* **cursor:** use digit-count anchor on deletion in money mask ([79b9ad0](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/79b9ad038edfa6306e72638a7d6c99673dfc11aa))
-* **engine:** emit trailing literals after input ends ([ea0eff4](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/ea0eff4552e7ccfc972383e3274c813d9f9cc6e3))
-* **engine:** guard trailing literal pass when input is empty ([c049335](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/c0493358f9237ff56f0757de486cafe4851972c0))
-* **example:** pass raw value to NitroMask ([0238dbc](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/0238dbcba8f4dcddb926290d2f8544e086199009))
-* **example:** resolve npx path from local.properties ([d43275b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/d43275baaad9063fc87ffffff86cdb04d124abe1))
-* export classes from public index ([f303d8f](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f303d8fd05123309b3cc59c64b676644743ff164))
-* **ios:** document throws as Nitro protocol requirement ([3301a1b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/3301a1bf29dbeea977d734d95e96319c562c18c8))
-* **ios:** extract UITextFieldDelegate to NSObject subclass ([65ec009](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/65ec00970cbaf8f53838b867028062bd8f2b4a09))
-* **ios:** extractRaw and value accept raw ([b190fd0](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/b190fd0c8feb1ac3f960aac27ab0106a44c7cb0f))
-* **nitro:** lazy getter and spec rename ([a249e3b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/a249e3ba4c568233e428ff1765774ae9ab6f4595))
-* NitroMaskProps extends spec type ([8d9ef4b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/8d9ef4b8ecd72bc4d941a8ec6f0cb2f44ffe8c6e))
-* **service:** add guards and export IApplyMaskProps ([ee316f2](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/ee316f2096efcbf954c5ec85eb6bfe38098b323b))
-* **spec:** make onChangeText optional ([63947de](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/63947de5d57287f94d4ecb0dd6a0664251aef858))
-
-### 🔄 Code Refactors
-
-* **android:** extract mask logic ([3ccdd89](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/3ccdd89cef81a357b4c76f79e4663e66f027ce40))
-* **android:** extract TextWatcher ([357d459](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/357d4596b9d73880455414ee0f8798ce0c89519e))
-* **android:** use MaskEngine and NitroMaskTextWatcher ([8343a8e](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/8343a8e52e2d4dc23c9e2077e61421e5b9ea53ff))
-* **example:** simplify to masked-only API ([04958a1](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/04958a174572c3a557643c5c4140a787e2948272))
-* **ios:** extract MaskEngine and delegate ([ab13346](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/ab133460a90c40775fc1a2754f94aebde935f6af))
-* rename module file ([fcc42a8](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/fcc42a8089b17d3cf4608a7654d76b916d02862a))
-* rename project to react-native-nitro-input-mask ([b5c6cc5](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/b5c6cc5f9ed78d22b699744506135d4fe75a3168))
-* reorganize module structure into components ([9f7acef](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/9f7acefe3bd444e510fe194900009a3022d3c21b))
-* **service:** extract class to own file ([bcf2786](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/bcf27867cd52011d3b71f74fd237defa1f10f8c1))
-* **structure:** split native sources into engine/ and masks/ ([d64fa0b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/d64fa0b3b043ecc6f5626a4397b769b41b9c98ff))
-* **types:** extract mask types to src/types/ ([c567f7b](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/c567f7b95fe1413f385e7eb052dd819d036b444d))
-
-### 📚 Documentation
-
-* add demo gif ([daa4201](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/daa42011df65f50cc2235629ea0f88ad088d802e))
-* add per-mask-type documentation ([f7cc172](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f7cc1729c28f056e5eb1fdffc624a9f0cb71c009))
-* center demo gif in README ([b6078d2](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/b6078d275e4a6dbea5c89242fee9e5aba548bfc9))
-* **readme:** add bun install example ([7df23da](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/7df23da480f2cc82ee16178c6770afd33c18c4c2))
-* **readme:** bump min RN to 0.78, remove redundant note ([ffe80d9](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/ffe80d9457d9a7f4f1d4a1399d46301210dbcf28))
-* **readme:** full review and rewrite ([8b236fa](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/8b236fa9eed05bfd1a222909e97e24de307f61ee))
-* **readme:** note New Architecture requirement ([9246647](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/92466478fd188b6a7477d0c5416a6449c1edc8b2))
-* **readme:** update examples to US locale, improve API table ([3335705](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/33357058750c8133f2e5dec09afadbdb161a1134))
-* **service:** add JSDoc to NitroInputMaskService ([5c2b23e](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/5c2b23e121549039fdf2bbed2a6e06d4bb622489))
-* write README and mask syntax reference ([f27200d](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f27200d5f2939e1ffd90b96e4bdbba8a16e93c17))
-
-### 🛠️ Other changes
-
-* add NODE_AUTH_TOKEN env ([a5a71a5](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/a5a71a51dda332fcb380fa9d223e952a16d52c54))
-* **example:** replace CPF with SSN, phone to US format ([b03ee79](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/b03ee7956ab4cb70016f33a10c3707c5314a645c))
-* up package name ([e17d982](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/e17d982391692e354d94660529ff51bcb84ce53d))
-* up package version to 1.0.0 ([f8283d1](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/f8283d11b85589cc7a0c483416b0bca7775da387))
-* update gitignore ([47249ab](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/47249ab0dcb9600a7f39cb11e3eeaff89b9911c9))
+- **`<NitroInputMask />`** — drop-in replacement for `<TextInput />` with synchronous native masking (zero JS flicker)
+- **`NitroInputMaskService`** — apply any mask to a string without rendering a component
+- **Built-in mask types** — `custom`, `money`, `datetime`, `credit-card`
+- **Range tokens** — inline `[from-to]` syntax (e.g. `[1-12]` for month)
+- iOS (Swift) and Android (Kotlin) support
