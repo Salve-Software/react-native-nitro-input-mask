@@ -6,9 +6,9 @@ Native input masks for React Native — zero JS flicker, built on [Nitro Modules
 [![npm downloads](https://img.shields.io/npm/dm/react-native-nitro-input-mask.svg)](https://www.npmjs.com/package/react-native-nitro-input-mask)
 [![License](https://img.shields.io/npm/l/react-native-nitro-input-mask.svg)](./LICENSE)
 
-<div>
-  <img align="right" src="./assets/demo.gif" width="320">
-</div>
+<p align="center">
+  <img src="./assets/demo.gif" width="320" />
+</p>
 
 ---
 
