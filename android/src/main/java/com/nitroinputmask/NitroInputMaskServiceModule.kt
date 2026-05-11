@@ -9,9 +9,9 @@ import com.nitroinputmask.engine.MaskEngineFactory
 @Keep
 @DoNotStrip
 class HybridNitroInputMaskServiceModule : HybridNitroInputMaskServiceSpec() {
-  override fun applyMask(value: String, maskType: String, options: NitroMaskOptions): String {
+  override fun applyMask(value: String, maskType: String, options: NitroMaskOptions): MaskResult {
     val engine = MaskEngineFactory.build(maskType, options)
-    val (masked, _) = engine.apply(value)
-    return masked
+    val (masked, raw) = engine.apply(value)
+    return MaskResult(masked = masked, raw = raw)
   }
 }
