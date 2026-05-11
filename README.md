@@ -80,6 +80,34 @@ function PhoneInput() {
 }
 ```
 
+Use `onChangeValue` to receive both the masked display value and the raw unformatted digits in one callback:
+
+```tsx
+import React, { useState } from 'react'
+import type { MaskResult } from 'react-native-nitro-input-mask'
+import { NitroInputMask } from 'react-native-nitro-input-mask'
+
+function PhoneInput() {
+  const [display, setDisplay] = useState('')
+  const [digits, setDigits] = useState('')
+
+  function handleChangeValue({ masked, raw }: MaskResult) {
+    setDisplay(masked) // '(555) 123-4567'
+    setDigits(raw)     // '5551234567'
+  }
+
+  return (
+    <NitroInputMask
+      maskOptions={{ mask: '(999) 999-9999' }}
+      placeholder="(555) 000-0000"
+      keyboardType="numeric"
+      value={display}
+      onChangeValue={handleChangeValue}
+    />
+  )
+}
+```
+
 ```tsx
 // Money
 <NitroInputMask
@@ -113,25 +141,26 @@ Apply a mask to any string — useful for formatting values in lists, previews, 
 ```tsx
 import { NitroInputMaskService } from 'react-native-nitro-input-mask'
 
-NitroInputMaskService.applyMask({
+const { masked, raw } = NitroInputMaskService.applyMask({
   value: '5551234567',
   maskOptions: { mask: '(999) 999-9999' },
 })
-// '(555) 123-4567'
+// masked: '(555) 123-4567'
+// raw:    '5551234567'
 
-NitroInputMaskService.applyMask({
+const { masked: maskedMoney } = NitroInputMaskService.applyMask({
   value: '123456',
   maskType: 'money',
   maskOptions: { unit: '$ ', precision: 2 },
 })
-// '$ 1,234.56'
+// maskedMoney: '$ 1,234.56'
 
-NitroInputMaskService.applyMask({
+const { masked: maskedDate } = NitroInputMaskService.applyMask({
   value: '06252025',
   maskType: 'datetime',
   maskOptions: { format: 'MM/DD/YYYY' },
 })
-// '06/25/2025'
+// maskedDate: '06/25/2025'
 ```
 
 ## Mask Syntax
@@ -150,6 +179,12 @@ NitroInputMaskService.applyMask({
 
 Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput#props).
 
+| Prop | Type | Description |
+|---|---|---|
+| `maskType` | `'custom' \| 'money' \| 'datetime' \| 'credit-card'` | Mask type (default `'custom'`) |
+| `maskOptions` | See table below | Options for the chosen mask type |
+| `onChangeValue` | `(result: MaskResult) => void` | Fires on every edit with `{ masked, raw }` |
+
 | maskType | maskOptions | Docs |
 |---|---|---|
 | `'custom'` (default) | `{ mask: string }` | [docs/custom.md](./docs/custom.md) |
@@ -165,7 +200,12 @@ Extends React Native's [`TextInputProps`](https://reactnative.dev/docs/textinput
 | `maskType` | `'custom' \| 'money' \| 'datetime' \| 'credit-card'` | Mask type (default `'custom'`) |
 | `maskOptions` | See table above | Options for the chosen mask type |
 
-Returns the masked `string`.
+Returns `MaskResult`:
+
+| Field | Type | Description |
+|---|---|---|
+| `masked` | `string` | Formatted string as displayed to the user |
+| `raw` | `string` | Unformatted input. For money masks, this is digit-only. |
 
 ## Contributing
 
