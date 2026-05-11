@@ -1,6 +1,6 @@
 {
   "name": "@salve-software/react-native-nitro-input-mask",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "High-performance native input masks for React Native built with Nitro Modules. Phone, currency, CPF, credit card and custom masks with zero JS flicker.",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
