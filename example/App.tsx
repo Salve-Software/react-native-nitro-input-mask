@@ -1,41 +1,52 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import type { MaskResult } from 'react-native-nitro-input-mask';
 import { NitroInputMask, NitroInputMaskService } from 'react-native-nitro-input-mask';
 
 function App(): React.JSX.Element {
   const [ssn, setSsn] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
+  const [phoneRaw, setPhoneRaw] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [money, setMoney] = useState<string>('');
 
   function applySSNMask() {
-    return NitroInputMaskService.applyMask({
+    const { masked } = NitroInputMaskService.applyMask({
       value: '123456789',
       maskOptions: { mask: '999-99-9999' },
     });
+    return masked;
   }
 
   function applyPhoneMask() {
-    return NitroInputMaskService.applyMask({
+    const { masked } = NitroInputMaskService.applyMask({
       value: '5551234567',
       maskOptions: { mask: '(999) 999-9999' },
     });
+    return masked;
   }
 
   function applyDateMask() {
-    return NitroInputMaskService.applyMask({
+    const { masked } = NitroInputMaskService.applyMask({
       value: '11222025',
       maskType: 'datetime',
       maskOptions: { format: 'MM/DD/YYYY' },
     });
+    return masked;
   }
 
   function applyMoneyMask() {
-    return NitroInputMaskService.applyMask({
+    const { masked } = NitroInputMaskService.applyMask({
       value: '123456',
       maskType: 'money',
       maskOptions: { unit: 'R$ ', precision: 2 },
     });
+    return masked;
+  }
+
+  function handlePhoneChangeValue({ masked, raw }: MaskResult) {
+    setPhone(masked);
+    setPhoneRaw(raw);
   }
 
   return (
@@ -52,11 +63,11 @@ function App(): React.JSX.Element {
           testID="nitro-input-mask-ssn"
         />
 
-        <Text style={styles.inputLabel}>Phone</Text>
+        <Text style={styles.inputLabel}>Phone (masked: {phone} | raw: {phoneRaw})</Text>
         <NitroInputMask
           maskOptions={{ mask: '(999) 999-9999' }}
           value={phone}
-          onChangeText={setPhone}
+          onChangeValue={handlePhoneChangeValue}
           style={styles.input}
           testID="nitro-input-mask-phone"
         />
