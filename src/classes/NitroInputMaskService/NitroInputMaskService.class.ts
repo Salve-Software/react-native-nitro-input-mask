@@ -1,4 +1,5 @@
 import type { IApplyMaskProps } from './types';
+import type { MaskResult } from '../../types';
 import { getNitroServiceModule } from '../../nitro-module';
 
 /**
@@ -8,23 +9,25 @@ import { getNitroServiceModule } from '../../nitro-module';
  * plain function call — no component or ref required.
  *
  * @example
- * const masked = NitroInputMaskService.applyMask({
+ * const { masked, raw } = NitroInputMaskService.applyMask({
  *   value: '12345678901',
  *   maskOptions: { mask: '999.999.999-99' },
  * })
- * // '123.456.789-01'
+ * // masked: '123.456.789-01'
+ * // raw:    '12345678901'
  *
  * @example
- * const masked = NitroInputMaskService.applyMask({
+ * const { masked, raw } = NitroInputMaskService.applyMask({
  *   value: '123456',
  *   maskType: 'money',
  *   maskOptions: { unit: 'R$ ', precision: 2 },
  * })
- * // 'R$ 1.234,56'
+ * // masked: 'R$ 1.234,56'
+ * // raw:    '123456'  (digit-only string for money masks)
  */
 export class NitroInputMaskService {
   /**
-   * Applies a mask to a string and returns the masked result.
+   * Applies a mask to a string and returns both the masked and raw values.
    *
    * For `custom` masks, tokens are:
    * - `9` — digit (0–9)
@@ -36,18 +39,19 @@ export class NitroInputMaskService {
    * @param props.value       - The raw string to mask.
    * @param props.maskType    - The mask type: `'custom'` (default), `'money'`, `'datetime'`, `'credit-card'`.
    * @param props.maskOptions - Options specific to the chosen mask type.
-   * @returns The masked string.
+   * @returns `{ masked, raw }` — the formatted string and the unformatted input.
+   *          For money masks, `raw` is a digit-only string.
    *
    * @throws If `value` exceeds 1000 characters or `custom` mask exceeds 200 characters.
    *
    * @example
-   * NitroInputMaskService.applyMask({
+   * const { masked } = NitroInputMaskService.applyMask({
    *   value: '11987654321',
    *   maskOptions: { mask: '(99) 99999-9999' },
    * })
-   * // '(11) 98765-4321'
+   * // masked: '(11) 98765-4321'
    */
-  static applyMask = (props: IApplyMaskProps): string => {
+  static applyMask = (props: IApplyMaskProps): MaskResult => {
     const { value, maskType, maskOptions } = props as IApplyMaskProps & {
       maskType?: string;
       maskOptions?: Record<string, unknown>;
@@ -57,9 +61,13 @@ export class NitroInputMaskService {
     const resolvedMaskType = maskType ?? 'custom';
     const resolvedOptions = maskOptions ?? {};
 
+    if (resolvedValue.length > 1000) {
+      throw new Error('NitroInputMaskService: value exceeds maximum allowed length');
+    }
+
     if (resolvedMaskType === 'custom') {
       const mask = String((resolvedOptions as { mask?: string }).mask ?? '');
-      if (!mask) return resolvedValue;
+      if (!mask) return { masked: resolvedValue, raw: resolvedValue };
       if (resolvedValue.length > 1000 || mask.length > 200) {
         throw new Error('NitroInputMaskService: value or mask exceeds maximum allowed length');
       }

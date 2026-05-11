@@ -30,7 +30,7 @@ abstract class HybridNitroInputMaskServiceSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun applyMask(value: String, maskType: String, options: NitroMaskOptions): String
+  abstract fun applyMask(value: String, maskType: String, options: NitroMaskOptions): MaskResult
 
   // Default implementation of `HybridObject.toString()`
   override fun toString(): String {

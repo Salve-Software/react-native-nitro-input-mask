@@ -1,3 +1,19 @@
+## [Unreleased]
+
+### ⚠️ Breaking Changes
+
+- `NitroInputMaskService.applyMask()` now returns `{ masked: string; raw: string }` instead of a plain `string`.
+  Migrate by destructuring: `const { masked } = NitroInputMaskService.applyMask(props)`
+
+### ✨ New Features
+
+- **`MaskResult` type** — canonical `{ masked, raw }` return type exported from the package root
+- **`onChangeValue` prop on `<NitroInputMask />`** — fires `(result: MaskResult) => void` on every edit,
+  giving consumers both the formatted display value and the raw unformatted input in a single callback.
+  For money masks, `raw` is a digit-only string.
+
+---
+
 ## 1.0.0 (2026-05-11)
 
 ### ✨Initial release

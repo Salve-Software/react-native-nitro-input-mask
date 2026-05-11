@@ -12,9 +12,12 @@
 // Forward declaration of `HybridNitroInputMaskServiceSpec_cxx` to properly resolve imports.
 namespace NitroInputMask { class HybridNitroInputMaskServiceSpec_cxx; }
 
+// Forward declaration of `MaskResult` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct MaskResult; }
 // Forward declaration of `NitroMaskOptions` to properly resolve imports.
 namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
+#include "MaskResult.hpp"
 #include <string>
 #include "NitroMaskOptions.hpp"
 #include <optional>
@@ -69,7 +72,7 @@ namespace margelo::nitro::nitroinputmask {
 
   public:
     // Methods
-    inline std::string applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) override {
+    inline MaskResult applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) override {
       auto __result = _swiftPart.applyMask(value, maskType, std::forward<decltype(options)>(options));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());

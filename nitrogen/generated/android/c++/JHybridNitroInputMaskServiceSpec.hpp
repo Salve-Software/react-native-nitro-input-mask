@@ -54,7 +54,7 @@ namespace margelo::nitro::nitroinputmask {
 
   public:
     // Methods
-    std::string applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) override;
+    MaskResult applyMask(const std::string& value, const std::string& maskType, const NitroMaskOptions& options) override;
 
   private:
     jni::global_ref<JHybridNitroInputMaskServiceSpec::JavaPart> _javaPart;
