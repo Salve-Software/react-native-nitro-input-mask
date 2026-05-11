@@ -5,10 +5,13 @@ import { NitroInputMask, NitroInputMaskService } from 'react-native-nitro-input-
 
 function App(): React.JSX.Element {
   const [ssn, setSsn] = useState<string>('');
+  const [ssnRaw, setSsnRaw] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [phoneRaw, setPhoneRaw] = useState<string>('');
   const [date, setDate] = useState<string>('');
+  const [dateRaw, setDateRaw] = useState<string>('');
   const [money, setMoney] = useState<string>('');
+  const [moneyRaw, setMoneyRaw] = useState<string>('');
 
   function applySSNMask() {
     const { masked } = NitroInputMaskService.applyMask({
@@ -44,9 +47,24 @@ function App(): React.JSX.Element {
     return masked;
   }
 
+  function handleSsnChangeText({ masked, raw }: MaskResult) {
+    setSsn(masked);
+    setSsnRaw(raw);
+  }
+
   function handlePhoneChangeText({ masked, raw }: MaskResult) {
     setPhone(masked);
     setPhoneRaw(raw);
+  }
+
+  function handleDateChangeText({ masked, raw }: MaskResult) {
+    setDate(masked);
+    setDateRaw(raw);
+  }
+
+  function handleMoneyChangeText({ masked, raw }: MaskResult) {
+    setMoney(masked);
+    setMoneyRaw(raw);
   }
 
   return (
@@ -58,12 +76,13 @@ function App(): React.JSX.Element {
         <NitroInputMask
           maskOptions={{ mask: '999-99-9999' }}
           value={ssn}
-          onChangeText={setSsn}
+          onChangeText={handleSsnChangeText}
           style={styles.input}
           testID="nitro-input-mask-ssn"
         />
+        <Text style={styles.valueLabel}>Masked: {ssn}  Raw: {ssnRaw}</Text>
 
-        <Text style={styles.inputLabel}>Phone (masked: {phone} | raw: {phoneRaw})</Text>
+        <Text style={styles.inputLabel}>Phone</Text>
         <NitroInputMask
           maskOptions={{ mask: '(999) 999-9999' }}
           value={phone}
@@ -71,26 +90,29 @@ function App(): React.JSX.Element {
           style={styles.input}
           testID="nitro-input-mask-phone"
         />
+        <Text style={styles.valueLabel}>Masked: {phone}  Raw: {phoneRaw}</Text>
 
         <Text style={styles.inputLabel}>Date</Text>
         <NitroInputMask
           maskType="datetime"
           maskOptions={{ format: 'DD/MM/YYYY' }}
           value={date}
-          onChangeText={setDate}
+          onChangeText={handleDateChangeText}
           style={styles.input}
           testID="nitro-input-mask-date"
         />
+        <Text style={styles.valueLabel}>Masked: {date}  Raw: {dateRaw}</Text>
 
         <Text style={styles.inputLabel}>Money</Text>
         <NitroInputMask
           maskType="money"
           maskOptions={{ unit: 'R$ ', precision: 2 }}
           value={money}
-          onChangeText={setMoney}
+          onChangeText={handleMoneyChangeText}
           style={styles.input}
           testID="nitro-input-mask-money"
         />
+        <Text style={styles.valueLabel}>Masked: {money}  Raw: {moneyRaw}</Text>
       </View>
 
       <View>
@@ -140,6 +162,13 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     paddingHorizontal: 12,
     color: '#ccc',
+  },
+
+  valueLabel: {
+    fontSize: 11,
+    alignSelf: 'flex-start',
+    color: '#888',
+    marginTop: 2,
   },
 });
 
