@@ -23,4 +23,16 @@ public final class NitroInputMaskAutolinking {
   public static func isNitroInputMaskRecyclable() -> Bool {
     return HybridNitroInputMaskModule.self is any RecyclableView.Type
   }
+  
+  public static func createNitroInputMaskService() -> bridge.std__shared_ptr_HybridNitroInputMaskServiceSpec_ {
+    let hybridObject = HybridNitroInputMaskServiceModule()
+    return { () -> bridge.std__shared_ptr_HybridNitroInputMaskServiceSpec_ in
+      let __cxxWrapped = hybridObject.getCxxWrapper()
+      return __cxxWrapped.getCxxPart()
+    }()
+  }
+  
+  public static func isNitroInputMaskServiceRecyclable() -> Bool {
+    return HybridNitroInputMaskServiceModule.self is any RecyclableView.Type
+  }
 }

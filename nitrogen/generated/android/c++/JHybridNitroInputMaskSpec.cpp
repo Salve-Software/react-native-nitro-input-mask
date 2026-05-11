@@ -7,9 +7,13 @@
 
 #include "JHybridNitroInputMaskSpec.hpp"
 
-
+// Forward declaration of `NitroMaskOptions` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
 #include <string>
+#include "NitroMaskOptions.hpp"
+#include "JNitroMaskOptions.hpp"
+#include <optional>
 
 namespace margelo::nitro::nitroinputmask {
 
@@ -44,17 +48,17 @@ namespace margelo::nitro::nitroinputmask {
   
 
   // Methods
-  void JHybridNitroInputMaskSpec::attach(const std::string& nativeID, const std::string& mask) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* mask */)>("attach");
-    method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(mask));
+  void JHybridNitroInputMaskSpec::attach(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* maskType */, jni::alias_ref<JNitroMaskOptions> /* options */)>("attach");
+    method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(maskType), JNitroMaskOptions::fromCpp(options));
   }
   void JHybridNitroInputMaskSpec::detach(const std::string& nativeID) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */)>("detach");
     method(_javaPart, jni::make_jstring(nativeID));
   }
-  void JHybridNitroInputMaskSpec::updateMask(const std::string& nativeID, const std::string& mask) {
-    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* mask */)>("updateMask");
-    method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(mask));
+  void JHybridNitroInputMaskSpec::updateMask(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) {
+    static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* maskType */, jni::alias_ref<JNitroMaskOptions> /* options */)>("updateMask");
+    method(_javaPart, jni::make_jstring(nativeID), jni::make_jstring(maskType), JNitroMaskOptions::fromCpp(options));
   }
   void JHybridNitroInputMaskSpec::setValue(const std::string& nativeID, const std::string& rawValue) {
     static const auto method = _javaPart->javaClassStatic()->getMethod<void(jni::alias_ref<jni::JString> /* nativeID */, jni::alias_ref<jni::JString> /* rawValue */)>("setValue");

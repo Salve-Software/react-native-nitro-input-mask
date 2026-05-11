@@ -11,6 +11,7 @@
 #import <type_traits>
 
 #include "HybridNitroInputMaskSpecSwift.hpp"
+#include "HybridNitroInputMaskServiceSpecSwift.hpp"
 
 @interface NitroInputMaskAutolinking : NSObject
 @end
@@ -25,6 +26,13 @@
     "NitroInputMask",
     []() -> std::shared_ptr<HybridObject> {
       std::shared_ptr<HybridNitroInputMaskSpec> hybridObject = NitroInputMask::NitroInputMaskAutolinking::createNitroInputMask();
+      return hybridObject;
+    }
+  );
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "NitroInputMaskService",
+    []() -> std::shared_ptr<HybridObject> {
+      std::shared_ptr<HybridNitroInputMaskServiceSpec> hybridObject = NitroInputMask::NitroInputMaskAutolinking::createNitroInputMaskService();
       return hybridObject;
     }
   );

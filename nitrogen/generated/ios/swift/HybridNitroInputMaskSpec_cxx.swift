@@ -125,9 +125,9 @@ open class HybridNitroInputMaskSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func attach(nativeID: std.string, mask: std.string) -> bridge.Result_void_ {
+  public final func attach(nativeID: std.string, maskType: std.string, options: NitroMaskOptions) -> bridge.Result_void_ {
     do {
-      try self.__implementation.attach(nativeID: String(nativeID), mask: String(mask))
+      try self.__implementation.attach(nativeID: String(nativeID), maskType: String(maskType), options: options)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
@@ -147,9 +147,9 @@ open class HybridNitroInputMaskSpec_cxx {
   }
   
   @inline(__always)
-  public final func updateMask(nativeID: std.string, mask: std.string) -> bridge.Result_void_ {
+  public final func updateMask(nativeID: std.string, maskType: std.string, options: NitroMaskOptions) -> bridge.Result_void_ {
     do {
-      try self.__implementation.updateMask(nativeID: String(nativeID), mask: String(mask))
+      try self.__implementation.updateMask(nativeID: String(nativeID), maskType: String(maskType), options: options)
       return bridge.create_Result_void_()
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()

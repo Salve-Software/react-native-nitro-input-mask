@@ -13,9 +13,9 @@ public protocol HybridNitroInputMaskSpec_protocol: HybridObject {
   
 
   // Methods
-  func attach(nativeID: String, mask: String) throws -> Void
+  func attach(nativeID: String, maskType: String, options: NitroMaskOptions) throws -> Void
   func detach(nativeID: String) throws -> Void
-  func updateMask(nativeID: String, mask: String) throws -> Void
+  func updateMask(nativeID: String, maskType: String, options: NitroMaskOptions) throws -> Void
   func setValue(nativeID: String, rawValue: String) throws -> Void
 }
 

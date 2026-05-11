@@ -1,5 +1,4 @@
 import type { TextInputProps } from 'react-native';
+import type { MaskConfig } from '../../../types';
 
-export interface NitroInputMaskProps extends TextInputProps {
-  mask: string;
-}
+export type NitroInputMaskProps = TextInputProps & MaskConfig;

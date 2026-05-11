@@ -12,9 +12,12 @@
 // Forward declaration of `HybridNitroInputMaskSpec_cxx` to properly resolve imports.
 namespace NitroInputMask { class HybridNitroInputMaskSpec_cxx; }
 
-
+// Forward declaration of `NitroMaskOptions` to properly resolve imports.
+namespace margelo::nitro::nitroinputmask { struct NitroMaskOptions; }
 
 #include <string>
+#include "NitroMaskOptions.hpp"
+#include <optional>
 
 #include "NitroInputMask-Swift-Cxx-Umbrella.hpp"
 
@@ -66,8 +69,8 @@ namespace margelo::nitro::nitroinputmask {
 
   public:
     // Methods
-    inline void attach(const std::string& nativeID, const std::string& mask) override {
-      auto __result = _swiftPart.attach(nativeID, mask);
+    inline void attach(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) override {
+      auto __result = _swiftPart.attach(nativeID, maskType, std::forward<decltype(options)>(options));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
@@ -78,8 +81,8 @@ namespace margelo::nitro::nitroinputmask {
         std::rethrow_exception(__result.error());
       }
     }
-    inline void updateMask(const std::string& nativeID, const std::string& mask) override {
-      auto __result = _swiftPart.updateMask(nativeID, mask);
+    inline void updateMask(const std::string& nativeID, const std::string& maskType, const NitroMaskOptions& options) override {
+      auto __result = _swiftPart.updateMask(nativeID, maskType, std::forward<decltype(options)>(options));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }
