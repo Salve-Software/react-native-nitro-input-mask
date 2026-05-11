@@ -2687,6 +2687,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@salve-software/react-native-nitro-input-mask@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@salve-software/react-native-nitro-input-mask@workspace:."
+  dependencies:
+    "@jamesacarr/eslint-formatter-github-actions": "npm:^0.2.0"
+    "@semantic-release/changelog": "npm:^6.0.3"
+    "@semantic-release/git": "npm:^10.0.1"
+    "@types/jest": "npm:^29.5.12"
+    "@types/react": "npm:19.2.0"
+    conventional-changelog-conventionalcommits: "npm:^9.1.0"
+    nitrogen: "npm:0.35.6"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.1"
+    react-native-builder-bob: "npm:^0.40.18"
+    react-native-nitro-modules: "npm:0.35.6"
+    semantic-release: "npm:^25.0.3"
+    typescript: "npm:^5.8.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+  languageName: unknown
+  linkType: soft
+
 "@sec-ant/readable-stream@npm:^0.4.1":
   version: 0.4.1
   resolution: "@sec-ant/readable-stream@npm:0.4.1"
@@ -3837,11 +3861,11 @@ __metadata:
   linkType: hard
 
 "baseline-browser-mapping@npm:^2.10.12":
-  version: 2.10.28
-  resolution: "baseline-browser-mapping@npm:2.10.28"
+  version: 2.10.29
+  resolution: "baseline-browser-mapping@npm:2.10.29"
   bin:
     baseline-browser-mapping: dist/cli.cjs
-  checksum: 10c0/9471b802b7f7f18c1e5c089a78bd94283c7b032b4c8c489427f51d8ad49ae5c53544b6c64580540064687bdeee62737bfd47fdbf8179cce42e4dddd91958af24
+  checksum: 10c0/d629a6d87f1aa0585b85ec8bf686bf58d706836fe7827d7bd11f646db2292f2089d8dff33fdd9a1ffe4c07424ae5b08743f57d9405d45cd8ceeb145e8dfb58e5
   languageName: node
   linkType: hard
 
@@ -9397,30 +9421,6 @@ __metadata:
     react-native: "npm:0.84.1"
     react-native-nitro-modules: "npm:0.35.6"
     react-native-safe-area-context: "npm:^5.5.2"
-  languageName: unknown
-  linkType: soft
-
-"react-native-nitro-input-mask@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-native-nitro-input-mask@workspace:."
-  dependencies:
-    "@jamesacarr/eslint-formatter-github-actions": "npm:^0.2.0"
-    "@semantic-release/changelog": "npm:^6.0.3"
-    "@semantic-release/git": "npm:^10.0.1"
-    "@types/jest": "npm:^29.5.12"
-    "@types/react": "npm:19.2.0"
-    conventional-changelog-conventionalcommits: "npm:^9.1.0"
-    nitrogen: "npm:0.35.6"
-    react: "npm:19.2.3"
-    react-native: "npm:0.84.1"
-    react-native-builder-bob: "npm:^0.40.18"
-    react-native-nitro-modules: "npm:0.35.6"
-    semantic-release: "npm:^25.0.3"
-    typescript: "npm:^5.8.3"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-nitro-modules: "*"
   languageName: unknown
   linkType: soft
 

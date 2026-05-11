@@ -64,8 +64,8 @@ Drop-in replacement for `<TextInput />`. Accepts all standard `TextInputProps` p
 
 ```tsx
 import React, { useState } from 'react'
-import type { MaskResult } from 'react-native-nitro-input-mask'
-import { NitroInputMask } from 'react-native-nitro-input-mask'
+import type { MaskResult } from '@salve-software/react-native-nitro-input-mask'
+import { NitroInputMask } from '@salve-software/react-native-nitro-input-mask'
 
 function PhoneInput() {
   const [display, setDisplay] = useState('')
@@ -119,7 +119,7 @@ function PhoneInput() {
 Apply a mask to any string — useful for formatting values in lists, previews, etc.
 
 ```tsx
-import { NitroInputMaskService } from 'react-native-nitro-input-mask'
+import { NitroInputMaskService } from '@salve-software/react-native-nitro-input-mask'
 
 const { masked, raw } = NitroInputMaskService.applyMask({
   value: '5551234567',
