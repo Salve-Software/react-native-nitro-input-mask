@@ -2,10 +2,8 @@
 
 ### ⚠ BREAKING CHANGES
 
-* **mask:** applyMask now returns { masked, raw } instead of a plain string.
-Consumers must destructure the result: const { masked, raw } = applyMask(props)
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+* **mask:** `applyMask` now returns `{ masked, raw }` instead of a plain string. Migrate with `const { masked, raw } = applyMask(props)`
+* **mask:** `<NitroInputMask onChangeText />` now receives `(result: MaskResult) => void` instead of `(text: string) => void`
 
 ### ✨ Features
 
@@ -46,22 +44,6 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 * **ios:** update pods for 1.0.0 ([693c731](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/693c73111e6229f6f182046681969ff94fa14a7c))
 * **release:** map breaking changes to minor bump ([75184f1](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/75184f191695e7521904528ff198393d3c0b1b3a))
 * update package name to scoped [@salve-software](https://github.com/salve-software) ([c20a9d1](https://github.com/Salve-Software/react-native-nitro-input-mask/commit/c20a9d1548aad70026a4a02df7578cc96c27fadd))
-
-## [Unreleased]
-
-### ⚠️ Breaking Changes
-
-- `NitroInputMaskService.applyMask()` now returns `{ masked: string; raw: string }` instead of a plain `string`.
-  Migrate by destructuring: `const { masked } = NitroInputMaskService.applyMask(props)`
-
-### ✨ New Features
-
-- **`MaskResult` type** — canonical `{ masked, raw }` return type exported from the package root
-- **`onChangeValue` prop on `<NitroInputMask />`** — fires `(result: MaskResult) => void` on every edit,
-  giving consumers both the formatted display value and the raw unformatted input in a single callback.
-  For money masks, `raw` is a digit-only string.
-
----
 
 ## 1.0.0 (2026-05-11)
 
