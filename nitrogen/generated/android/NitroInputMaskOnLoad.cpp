@@ -28,7 +28,7 @@ int initialize(JavaVM* vm) {
 }
 
 struct JHybridNitroInputMaskSpecImpl: public jni::JavaClass<JHybridNitroInputMaskSpecImpl, JHybridNitroInputMaskSpec::JavaPart> {
-  static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/nitroinputmask/HybridNitroInputMaskModule;";
+  static constexpr auto kJavaDescriptor = "Lcom/nitroinputmask/HybridNitroInputMaskModule;";
   static std::shared_ptr<JHybridNitroInputMaskSpec> create() {
     static const auto constructorFn = javaClassStatic()->getConstructor<JHybridNitroInputMaskSpecImpl::javaobject()>();
     jni::local_ref<JHybridNitroInputMaskSpec::JavaPart> javaPart = javaClassStatic()->newObject(constructorFn);
@@ -36,7 +36,7 @@ struct JHybridNitroInputMaskSpecImpl: public jni::JavaClass<JHybridNitroInputMas
   }
 };
 struct JHybridNitroInputMaskServiceSpecImpl: public jni::JavaClass<JHybridNitroInputMaskServiceSpecImpl, JHybridNitroInputMaskServiceSpec::JavaPart> {
-  static constexpr auto kJavaDescriptor = "Lcom/margelo/nitro/nitroinputmask/HybridNitroInputMaskServiceModule;";
+  static constexpr auto kJavaDescriptor = "Lcom/nitroinputmask/HybridNitroInputMaskServiceModule;";
   static std::shared_ptr<JHybridNitroInputMaskServiceSpec> create() {
     static const auto constructorFn = javaClassStatic()->getConstructor<JHybridNitroInputMaskServiceSpecImpl::javaobject()>();
     jni::local_ref<JHybridNitroInputMaskServiceSpec::JavaPart> javaPart = javaClassStatic()->newObject(constructorFn);
