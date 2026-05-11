@@ -1,10 +1,10 @@
 import type { NitroInputMaskProps } from './types';
-import React, { useEffect, useId } from 'react';
+import React, { useCallback, useEffect, useId } from 'react';
 import { TextInput } from 'react-native';
-import { nitroModule } from '../../nitro-module';
+import { nitroModule, getNitroServiceModule } from '../../nitro-module';
 
 export const NitroInputMask = (props: NitroInputMaskProps) => {
-  const { maskType, maskOptions, value, ...rest } = props as NitroInputMaskProps & {
+  const { maskType, maskOptions, onChangeValue, onChangeText, value, ...rest } = props as NitroInputMaskProps & {
     maskType?: string;
     maskOptions?: Record<string, unknown>;
   };
@@ -30,9 +30,18 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
     nitroModule.setValue(id, String(value));
   }, [value]);
 
+  const handleChangeText = useCallback((text: string) => {
+    onChangeText?.(text);
+    if (onChangeValue) {
+      const result = getNitroServiceModule().applyMask(text, resolvedMaskType, maskOptions ?? {});
+      onChangeValue(result);
+    }
+  }, [onChangeText, onChangeValue, resolvedMaskType, maskOptionsJson]);
+
   return (
     <TextInput
       {...rest}
+      onChangeText={handleChangeText}
       nativeID={id}
     />
   )
