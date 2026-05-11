@@ -39,8 +39,9 @@ export const NitroInputMask = (props: NitroInputMaskProps) => {
   }, [value]);
 
   const handleChangeText = useCallback((text: string) => {
+    valueFromUserInput.current = true;
+    
     if (onChangeText) {
-      valueFromUserInput.current = true;
       const result = getNitroServiceModule().applyMask(text, resolvedMaskType, stableOptions);
       onChangeText(result);
     }
